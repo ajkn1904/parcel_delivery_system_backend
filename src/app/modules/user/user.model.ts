@@ -1,7 +1,17 @@
-import mongoose, { model } from 'mongoose';
-import { IUser, Role } from './user.interface';
+import { model, Schema } from 'mongoose';
+import { IAuthProvider, IUser, Role } from './user.interface';
 
-const userSchema = new mongoose.Schema({
+
+const authProviderSchema = new Schema<IAuthProvider>({
+    provider: { type: String, required: true },
+    providerId: { type: String, required: true }    
+}, {
+    _id: false, 
+    versionKey: false
+});
+
+
+const userSchema = new Schema({
   fullName: { 
     type: String, 
     required: true 
@@ -23,10 +33,12 @@ const userSchema = new mongoose.Schema({
     },
   phone: { type: String },
   address: { type: String },
+  isDeleted: { type: Boolean, default: false},
   isBlocked: { 
     type: Boolean, 
     default: false 
 },
+auths: [authProviderSchema],
 }, { 
     timestamps: true,
     versionKey: false 

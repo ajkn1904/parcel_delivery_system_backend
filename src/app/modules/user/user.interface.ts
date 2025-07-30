@@ -11,12 +11,14 @@ export interface IAuthProvider {
 
 
 export interface IUser {
+  _id?: string;
   fullName: string;
   email: string;
   password?: string;
   role: Role;
   phone?: string;
   address?: string;
+  isDeleted?: boolean;
   isBlocked?: boolean;
   auths: IAuthProvider[]
 }
