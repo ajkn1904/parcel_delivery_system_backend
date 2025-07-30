@@ -12,7 +12,7 @@ const authProviderSchema = new Schema<IAuthProvider>({
 
 
 const userSchema = new Schema({
-  fullName: { 
+  name: { 
     type: String, 
     required: true 
 },
