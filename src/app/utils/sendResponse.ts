@@ -1,12 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextFunction, Request, Response } from "express";
+import { Response } from "express";
 
-type AsyncHandler = (req:Request, res:Response, next: NextFunction) => Promise<void>;
+interface TMeta {
+  total: number;
+}
 
+interface TResponse<T> {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data: T;
+  meta?: TMeta;
+}
 
-export const catchAsync = (fn: AsyncHandler) => (req:Request, res:Response, next: NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch((err: any) => {
-        console.error(err);
-        next(err);
-    })
+const sendResponse = <T>(res: Response, data: TResponse<T>) => {
+  res.status(data.statusCode).json({
+    statusCode: data.statusCode,
+    success: data.success,
+    message: data.message,
+    data: data.data,
+    meta: data.meta,
+  });
 };
+
+export default sendResponse;

@@ -28,8 +28,7 @@ const userSchema = new Schema({
   role: {
      type: String, 
      enum: Object.values(Role),
-     default: Role.receiver, 
-     required: true 
+     default: Role.receiver
     },
   phone: { type: String },
   address: { type: String },
