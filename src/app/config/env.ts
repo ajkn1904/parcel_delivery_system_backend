@@ -17,11 +17,11 @@ interface EnvConfig {
   FRONTEND_URL: string,
   ADMIN_EMAIL: string,
   ADMIN_PASSWORD: string,
-
+  EXPRESS_SESSION_SECRET: string
 }
 
 const loadEnvVars = (): EnvConfig => {
-  const requiredEnvVars: string[] = ["PORT", "DATABASE_URL", "NODE_ENVIRONMENT","JWT_ACCESS_SECRET", "JWT_ACCESS_EXPIRES","JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES","GOOGLE_CLIENT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CALLBACK_URL", "BCRYPT_SALT_ROUND", "FRONTEND_URL", "ADMIN_EMAIL", "ADMIN_PASSWORD"];
+  const requiredEnvVars: string[] = ["PORT", "DATABASE_URL", "NODE_ENVIRONMENT","JWT_ACCESS_SECRET", "JWT_ACCESS_EXPIRES","JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES","GOOGLE_CLIENT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CALLBACK_URL", "BCRYPT_SALT_ROUND", "FRONTEND_URL", "ADMIN_EMAIL", "ADMIN_PASSWORD", "EXPRESS_SESSION_SECRET"];
 
 
 requiredEnvVars.forEach((key) => {
@@ -45,7 +45,8 @@ requiredEnvVars.forEach((key) => {
     BCRYPT_SALT_ROUND: process.env.BCRYPT_SALT_ROUND as string,
     FRONTEND_URL: process.env.FRONTEND_URL as string,
     ADMIN_EMAIL: process.env.ADMIN_EMAIL as string,
-    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD as string, 
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD as string,
+    EXPRESS_SESSION_SECRET: process.env.EXPRESS_SESSION_SECRET as string, 
     
     };
 };
