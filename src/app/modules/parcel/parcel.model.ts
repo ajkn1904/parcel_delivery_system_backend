@@ -78,15 +78,28 @@ const ParcelSchema = new Schema<IParcel>(
         type: Date, 
         required: true 
     },
+    
+    paymentMethod: {
+        type: String,
+        enum: Object.values(PaymentMethod),
+        required: true
+    },
+    
+    coupon: {
+        type: Schema.Types.ObjectId,
+        ref: "Coupon",
+        required: false
+    },
+    discountAmount: {
+        type: Number,
+        default: 0
+    },
+    afterDiscountFee: {
+        type: Number,
+    },
     deliveryFee: { 
         type: Number, 
         required: true 
-    },
-
-    paymentMethod: {
-      type: String,
-      enum: Object.values(PaymentMethod),
-      required: true
     },
 
     isPaid: { type: Boolean },

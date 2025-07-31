@@ -49,10 +49,6 @@ export const createParcelZodSchema = z.object({
     { message: "Estimated delivery date must be a valid date" }
   ),
 
-  deliveryFee: z
-    .number({ error: "Delivery fee must be a number" })
-    .nonnegative({ message: "Delivery fee cannot be negative" }),
-
   paymentMethod: z.enum(Object.values(PaymentMethod) as [string], {
     error: "Payment method is required"
   }),
@@ -74,7 +70,26 @@ export const createParcelZodSchema = z.object({
         updatedBy: z.string().optional()
       })
     )
+    .optional(),
+
+    coupon: z
+    .string()
     .optional()
+    .or(z.literal("").transform(() => undefined)),
+
+    discountAmount: z
+    .number({ error: "Discount must be a number" })
+    .nonnegative()
+    .optional(),
+
+    afterDiscountFee: z
+    .number({ error: "Final fee must be a number" })
+    .nonnegative()
+    .optional(),
+
+    deliveryFee: z
+    .number({ error: "Delivery fee must be a number" })
+    .nonnegative({ message: "Delivery fee cannot be negative" }),
 });
 
 

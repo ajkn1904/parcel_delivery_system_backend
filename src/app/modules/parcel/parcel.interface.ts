@@ -37,6 +37,13 @@ export interface IStatusLog {
 }
 
 
+export interface ICoupon {
+  _id?: string;
+  code: string;
+  discountPercentage: number;
+  expiryDate: Date;
+}
+
 
 export interface IParcel extends Document {
   sender: Types.ObjectId;
@@ -53,8 +60,13 @@ export interface IParcel extends Document {
   trackingEvents: IStatusLog[];            
 
   estimatedDeliveryDate: Date;
-  deliveryFee: number;
   paymentMethod: PaymentMethod;
+  
+  coupon?: Types.ObjectId;
+  discountAmount?: number;
+  afterDiscountFee?: number;
+  deliveryFee: number;
+
   isPaid?: boolean;
   isCancelled?: boolean;
 }
