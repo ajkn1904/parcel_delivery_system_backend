@@ -59,9 +59,21 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
     const result = await userServices.getSingleUser(id);
     sendResponse(res, {
         success: true,
-        statusCode: StatusCodes.CREATED,
+        statusCode: StatusCodes.OK,
         message: "User Retrieved Successfully",
         data: result.data
+    })
+})
+
+
+const deleteOwnAccount = catchAsync(async (req: Request, res: Response) => {
+    const email = (req.user as JwtPayload).email;
+    await userServices.deleteOwnAccount(email);
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: "Account Deleted Successfully",
+        data: null
     })
 })
 
@@ -72,4 +84,5 @@ export const userController = {
   getAllUsers,
   getSingleUser,
   updateUser,
+  deleteOwnAccount
 };

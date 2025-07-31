@@ -17,5 +17,6 @@ router.get("/:id", checkAuth(...Object.values(Role)), userController.getSingleUs
 
 router.patch("/:id", validationRequest(updateZodSchema), checkAuth(...Object.values(Role)) ,userController.updateUser);
 
+router.delete("/me", checkAuth(Role.sender, Role.receiver), userController.deleteOwnAccount)
 
 export const UserRoutes = router;

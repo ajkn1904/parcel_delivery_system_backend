@@ -11,6 +11,7 @@ import sendResponse from "../../utils/sendResponse";
 import { AuthService } from "./auth.service";
 import { JwtPayload } from "jsonwebtoken";
 import { envVars } from "../../config/env";
+import { ensureUserNotDeleted } from "../../utils/checkDeletedUser";
 
 const credentialsLogin = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
@@ -22,11 +23,19 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
       return next(new AppError(StatusCodes.NOT_FOUND, info.message))
     };
 
+    try {
+        ensureUserNotDeleted(user);
+    } catch (err) {
+        return next(err);
+    }
+
+
     const userToken = await createUserTokens(user);
     setAuthCookie(res, userToken);
 
     const {password, ...rest} = user.toObject();
-
+    ensureUserNotDeleted(user);
+    
     sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
@@ -115,6 +124,11 @@ const googleCallbackController = catchAsync(async (req: Request, res: Response, 
   if(!user){
     throw new AppError(StatusCodes.NOT_FOUND, "User Not Found");
   };
+  try {
+        ensureUserNotDeleted(user);
+    } catch (err) {
+        return next(err);
+    }
 
   const tokenInfo = createUserTokens(user);
 

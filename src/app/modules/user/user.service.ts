@@ -11,6 +11,9 @@ const createUser = async (payload: Partial<IUser>) => {
 
   const isUserExists = await User.findOne({ email });
   if (isUserExists) {
+    if (isUserExists.isDeleted) {
+      throw new AppError(StatusCodes.BAD_REQUEST, "Email is taken, try another email.");
+    }
     throw new AppError(StatusCodes.BAD_REQUEST, "User already exists");
   }
 
@@ -61,8 +64,8 @@ const updateUser = async (userId: string, payload: Partial<IUser>, decodedToken:
 
 const getAllUsers = async () => {
 
-  const users = await User.find({isDeleted: { $ne: true }});
-  const totalUsers = await User.countDocuments({isDeleted: { $ne: true }});
+  const users = await User.find();
+  const totalUsers = await User.countDocuments();
 
   return {
     users,
@@ -83,10 +86,28 @@ const getSingleUser = async (id: string) => {
     }
 };
 
+const deleteOwnAccount = async (email: string) => {
+  const user = await User.findOne({ email, isDeleted: { $ne: true } });
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found or already deleted");
+  }
+
+  if (user.role !== Role.sender && user.role !== Role.receiver) {
+    throw new AppError(StatusCodes.FORBIDDEN, "Only sender or receiver can delete account");
+  }
+
+  user.isDeleted = true;
+  await user.save();
+
+  return { message: "Account deleted successfully" };
+};
+
 
 export const userServices = {
   createUser,
   getAllUsers,
   getSingleUser,
   updateUser,
+  deleteOwnAccount
 };
