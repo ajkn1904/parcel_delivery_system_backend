@@ -6,19 +6,19 @@ import { Role } from "./user.interface";
 //zod schema for create user validation
 export const createZodSchema = z.object({
   name: z
-    .string({ error: "Name must be a string" })
+    .string({ error: "Name is required and it must be a string" })
     .min(2, { message: "Name required minimum 2 characters" })
     .max(50, { message: "Name must be less than 50 characters" })
     .trim(),
 
   email: z
-    .string({error: "Email must be a string" })
+    .string({error: "Email is required and it must be a string" })
     .email({ message: "Invalid email format" })
     .max(100, { message: "Email cannot exceed 100 characters" })
     .trim(),
 
   password: z
-    .string({ error: "Password must be a string" })
+    .string({ error: "Password is required and it must be a string" })
     .min(6, { message: "Password must be at least 6 characters" })
     .regex(/^(?=.*[A-Z])/, {
       message: "Password must contain at least 1 uppercase letter.",

@@ -12,7 +12,7 @@ export const validationRequest =
       if (error instanceof ZodError) {
         const simplifiedError = handleZodError(error);
 
-        // Send proper JSON response
+        
         return res.status(simplifiedError.statusCode).json({
           success: false,
           message: simplifiedError.message,

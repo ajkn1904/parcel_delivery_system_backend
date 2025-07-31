@@ -1,5 +1,5 @@
 export interface TErrorSources {
-    path: string,
+    name: string,
     message: string
 }
 
