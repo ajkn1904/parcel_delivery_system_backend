@@ -55,11 +55,13 @@ export const createParcelZodSchema = z.object({
 
   isPaid: z
     .boolean({ error: "It must be true or false" })
-    .optional(),
+    .optional()
+    .default(false),
 
   isCancelled: z
     .boolean({ error: "It must be true or false" })
-    .optional(),
+    .optional()
+    .default(false),
 
   trackingEvents: z
     .array(

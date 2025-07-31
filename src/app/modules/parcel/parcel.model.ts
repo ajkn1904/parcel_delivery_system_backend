@@ -102,8 +102,14 @@ const ParcelSchema = new Schema<IParcel>(
         required: true 
     },
 
-    isPaid: { type: Boolean },
-    isCancelled: { type: Boolean }
+    isPaid: { 
+        type: Boolean,
+        default: false 
+    },
+    isCancelled: { 
+        type: Boolean,
+        default: false
+    }
   },
   {
     timestamps: true,
