@@ -67,7 +67,52 @@ const createParcel = async (payload: IParcel, email:string) => {
     return newParcel;
 }
 
+const getAllParcels = async (email: string) => {
+    const user = await User.findOne({ email: email });
+    if (!user) {            
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+
+    if(user.role === "admin"){
+        return await Parcel.find();
+    }
+    if(user.role === "sender") {
+        return await Parcel.find({ sender: user._id });
+    }
+    if(user.role === "receiver") {
+        return await Parcel.find({ receiver: user._id });
+    }
+
+    return [];
+}
+
+
+const getSingleParcel = async (id: string, email: string, decodedRole: string) => {
+    const user = await User.findOne({ email: email });
+    if (!user) {            
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+
+    const parcel = await Parcel.findById(id);
+    if (!parcel) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
+    }
+
+    if(decodedRole === "admin") {
+        return parcel;
+    }
+    else if(decodedRole === "sender" && parcel.sender?.toString() === user._id.toString()) {
+        return parcel;
+    }
+    else if(decodedRole === "receiver" && parcel.receiver?.toString() === user._id.toString()) {
+        return parcel;
+    }
+    else throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized to access this parcel");
+}
+
 
 export const ParcelService = {
     createParcel,
+    getAllParcels,
+    getSingleParcel
 }

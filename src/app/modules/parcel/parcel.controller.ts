@@ -10,11 +10,38 @@ const createParcel = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, {
       statusCode: 201,
       success: true,
-      message: "Parcel created successfully",
+      message: "Parcel Created Successfully",
+      data: parcel,
+    });
+});
+
+
+const getAllParcels = catchAsync(async (req: Request, res: Response) => {
+    const user = req.user as JwtPayload;
+    const parcel = await ParcelService.getAllParcels(user.email);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Parcel Retrieved Successfully",
+      data: parcel,
+    });
+});
+
+
+const getSingleParcel = catchAsync(async (req: Request, res: Response) => {
+    const user = req.user as JwtPayload;
+    const parcelId = req.params.id;
+    const parcel = await ParcelService.getSingleParcel(parcelId, user.email, user.role);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Parcel Retrieved Successfully",
       data: parcel,
     });
 });
 
 export const ParcelController = {
     createParcel,
+    getAllParcels,
+    getSingleParcel
   }
