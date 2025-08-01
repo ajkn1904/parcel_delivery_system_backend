@@ -5,7 +5,7 @@ export enum ParcelType {
   Electronics = "Electronics",
   Clothing = "Clothing",
   Grocery = "Grocery",
-  Other = "Other"
+  Other = "Other",
 }
 
 export enum ParcelStatus {
@@ -16,17 +16,17 @@ export enum ParcelStatus {
   Delivered = "Delivered",
   Canceled = "Canceled",
   Blocked = "Blocked",
-  Returned = "Returned"
+  Returned = "Returned",
 }
 
 export enum PaymentMethod {
   CashOnDelivery = "Cash on Delivery",
-  OnlinePayment = "Online Payment"
+  OnlinePayment = "Online Payment",
 }
 
 export enum DeliveryMethod {
   Agent = "Agent",
-  Hub = "Hub"
+  Hub = "Hub",
 }
 
 export interface IStatusLog {
@@ -36,14 +36,12 @@ export interface IStatusLog {
   updatedBy?: string; // user id
 }
 
-
 export interface ICoupon {
   _id?: string;
   code: string;
   discountPercentage: number;
   expiryDate: Date;
 }
-
 
 export interface IParcel extends Document {
   sender: Types.ObjectId;
@@ -54,20 +52,20 @@ export interface IParcel extends Document {
   deliveryMethod: DeliveryMethod;
   deliveryAddress: string;
   pickupAddress: string;
+  deliveryDistance: number;
   contactPhone: string;
 
-  currentStatus?: ParcelStatus;             
-  trackingEvents: IStatusLog[];            
+  currentStatus?: ParcelStatus;
+  trackingEvents: IStatusLog[];
 
   estimatedDeliveryDate: Date;
   paymentMethod: PaymentMethod;
-  
+
+  deliveryFee: number;
   coupon?: Types.ObjectId;
   discountAmount?: number;
   afterDiscountFee?: number;
-  deliveryFee: number;
 
   isPaid?: boolean;
   isCancelled?: boolean;
 }
-
