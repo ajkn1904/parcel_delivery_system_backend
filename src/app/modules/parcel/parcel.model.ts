@@ -1,6 +1,7 @@
 import { model, Schema, Types } from "mongoose";
 import {
   DeliveryMethod,
+  ICoupon,
   IParcel,
   IStatusLog,
   ParcelStatus,
@@ -21,6 +22,38 @@ const StatusLogSchema = new Schema<IStatusLog>(
   },
   { _id: false, timestamps: true }
 );
+
+
+const couponSchema = new Schema<ICoupon>(
+  {
+    code: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    discountPercentage: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 100,
+    },
+    expiryDate: {
+      type: Date,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+    versionKey: false
+  }
+);
+
+export const Coupon = model<ICoupon>("Coupon", couponSchema);
+
+
+
+
 
 const ParcelSchema = new Schema<IParcel>(
   {
