@@ -199,9 +199,11 @@ const updateParcelStatusByAdmin = async(payload: any, id: string, email:string) 
     if (!payload.currentStatus) {
         throw new AppError(StatusCodes.BAD_REQUEST, "Current status is required.");
     }
+
+
     parcel.trackingEvents.push({
-        status: payload.currentStatus,
-        note: `Parcel status updated to ${payload.currentStatus} by admin.`,
+        status: payload.currentStatus === "Blocked" ? "Canceled" : payload.currentStatus,
+        note: `Parcel status updated to ${payload.currentStatus === "Blocked" ? "Canceled" : payload.currentStatus} by admin.`,
         location: payload.location || "N/A",
         updatedBy: user._id.toString(),
     });
@@ -209,6 +211,7 @@ const updateParcelStatusByAdmin = async(payload: any, id: string, email:string) 
     await parcel.save();
     return parcel;
 }
+
 
 
 export const ParcelService = {
