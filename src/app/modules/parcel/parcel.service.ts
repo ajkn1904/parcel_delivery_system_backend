@@ -235,6 +235,30 @@ const deleteParcel = async(id:string, email:string) => {
 }
 
 
+const trackParcel = async (id: string, email: string) => {
+    const user = await User.findOne({ email: email });
+    if (!user) {            
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+
+    const parcel = await Parcel.findById(id);
+    if (!parcel) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
+    }
+
+    if(user.role === "admin") {
+        return parcel.trackingEvents;
+    }
+    else if(user.role === "sender" && parcel.sender?.toString() === user._id.toString()) {
+        return parcel.trackingEvents;
+    }
+    else if(user.role === "receiver" && parcel.receiver?.toString() === user._id.toString()) {
+        return parcel.trackingEvents;
+    }
+    else throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized to access this parcel");
+}
+
+
 
 export const ParcelService = {
     createParcel,
@@ -242,5 +266,6 @@ export const ParcelService = {
     getSingleParcel,
     updateParcelStatus,
     updateParcelStatusByAdmin,
-    deleteParcel
+    deleteParcel,
+    trackParcel
 }

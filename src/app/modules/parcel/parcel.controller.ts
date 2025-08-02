@@ -79,11 +79,25 @@ const deleteParcel = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+
+const trackParcel = catchAsync(async (req: Request, res: Response) => {
+    const email = (req.user as JwtPayload).email;
+    const parcelId = req.params.id;
+    const parcel = await ParcelService.trackParcel(parcelId, email);
+    sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "Parcel Retrieved Successfully",
+        data: parcel
+    })
+})
+
 export const ParcelController = {
     createParcel,
     getAllParcels,
     getSingleParcel,
     updateParcelStatus,
     updateParcelStatusByAdmin,
-    deleteParcel
+    deleteParcel,
+    trackParcel
   }

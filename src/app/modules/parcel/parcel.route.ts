@@ -12,6 +12,9 @@ router.get("/", checkAuth(...Object.values(Role)), ParcelController.getAllParcel
 
 router.get("/:id", checkAuth(...Object.values(Role)), ParcelController.getSingleParcel);
 
+
+router.get("/history/:id", checkAuth(...Object.values(Role)), ParcelController.trackParcel);
+
 router.patch("/status/:id", checkAuth(Role.sender, Role.receiver), ParcelController.updateParcelStatus);
 
 router.patch("/admin/status/:id", checkAuth(Role.admin), ParcelController.updateParcelStatusByAdmin);
