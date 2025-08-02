@@ -16,4 +16,6 @@ router.patch("/status/:id", checkAuth(Role.sender, Role.receiver), ParcelControl
 
 router.patch("/admin/status/:id", checkAuth(Role.admin), ParcelController.updateParcelStatusByAdmin);
 
+router.delete("/:id", checkAuth(Role.admin), ParcelController.deleteParcel);
+
 export const ParcelRoutes = router;

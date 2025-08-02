@@ -66,10 +66,24 @@ const updateParcelStatusByAdmin = catchAsync(async (req: Request, res: Response)
     });
 });
 
+
+const deleteParcel = catchAsync(async (req: Request, res: Response) => {
+    const email = (req.user as JwtPayload).email;
+    const parcelId = req.params.id;
+    await ParcelService.deleteParcel(parcelId, email);
+    sendResponse(res, {
+        success: true,
+        statusCode: 200,
+        message: "Parcel Deleted Successfully",
+        data: null
+    })
+})
+
 export const ParcelController = {
     createParcel,
     getAllParcels,
     getSingleParcel,
     updateParcelStatus,
-    updateParcelStatusByAdmin
+    updateParcelStatusByAdmin,
+    deleteParcel
   }

@@ -173,14 +173,14 @@ const updateParcelStatusByAdmin = async(payload: any, id: string, email:string) 
         throw new AppError(StatusCodes.NOT_FOUND, "User not found");
     }
 
+    if(user.role !== "admin") {
+        throw new AppError(StatusCodes.FORBIDDEN, "Only admin can update parcel status");
+    }
+
 
     const parcel = await Parcel.findById(id);
     if (!parcel) {
         throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
-    }
-
-    if(user.role !== "admin") {
-        throw new AppError(StatusCodes.FORBIDDEN, "Only admin can update parcel status");
     }
 
     parcel.currentStatus = payload.currentStatus;
@@ -213,6 +213,28 @@ const updateParcelStatusByAdmin = async(payload: any, id: string, email:string) 
 }
 
 
+const deleteParcel = async(id:string, email:string) => {
+    
+    const user = await User.findOne({ email: email });
+    if (!user) {            
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+
+    if(user.role !== "admin") {
+        throw new AppError(StatusCodes.FORBIDDEN, "Only admin can delete parcel");
+    }
+
+    const parcel = await Parcel.findById(id);
+    if (!parcel) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
+    }
+
+    await Parcel.findByIdAndDelete(id)
+    return { message: "Parcel deleted successfully" };
+
+}
+
+
 
 export const ParcelService = {
     createParcel,
@@ -220,5 +242,5 @@ export const ParcelService = {
     getSingleParcel,
     updateParcelStatus,
     updateParcelStatusByAdmin,
-
+    deleteParcel
 }
