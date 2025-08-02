@@ -40,8 +40,36 @@ const getSingleParcel = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+
+const updateParcelStatus = catchAsync(async (req: Request, res: Response) => {
+    const user = req.user as JwtPayload;
+    const parcelId = req.params.id;
+    const parcel = await ParcelService.updateParcelStatus(parcelId, user.email);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Parcel Updated Successfully",
+      data: parcel,
+    });
+});
+
+
+const updateParcelStatusByAdmin = catchAsync(async (req: Request, res: Response) => {
+    const user = req.user as JwtPayload;
+    const parcelId = req.params.id;
+    const parcel = await ParcelService.updateParcelStatusByAdmin(req.body, parcelId, user.email);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Parcel Updated Successfully",
+      data: parcel,
+    });
+});
+
 export const ParcelController = {
     createParcel,
     getAllParcels,
-    getSingleParcel
+    getSingleParcel,
+    updateParcelStatus,
+    updateParcelStatusByAdmin
   }

@@ -12,4 +12,8 @@ router.get("/", checkAuth(...Object.values(Role)), ParcelController.getAllParcel
 
 router.get("/:id", checkAuth(...Object.values(Role)), ParcelController.getSingleParcel);
 
+router.patch("/status/:id", checkAuth(Role.sender, Role.receiver), ParcelController.updateParcelStatus);
+
+router.patch("/admin/status/:id", checkAuth(Role.admin), ParcelController.updateParcelStatusByAdmin);
+
 export const ParcelRoutes = router;

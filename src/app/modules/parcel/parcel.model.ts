@@ -121,6 +121,10 @@ const ParcelSchema = new Schema<IParcel>(
       type: Boolean,
       default: false,
     },
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

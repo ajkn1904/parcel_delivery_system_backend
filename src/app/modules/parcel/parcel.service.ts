@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errorHelper/AppError";
-import { IParcel } from "./parcel.interface";
+import { IParcel, ParcelStatus } from "./parcel.interface";
 import { Parcel } from "./parcel.model";
 import { User } from "../user/user.model";
 
@@ -111,8 +111,111 @@ const getSingleParcel = async (id: string, email: string, decodedRole: string) =
 }
 
 
+const updateParcelStatus = async(id: string, email:string) => {
+    const parcel = await Parcel.findById(id);
+    
+    const user = await User.findOne({ email: email });
+    if (!user) {            
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+
+
+    if (!parcel) {          
+        throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
+    }
+
+    //sender can 'cancel' parcel
+    if(user.role === "sender"){
+        if(parcel.sender?.toString() !== user._id.toString()) {
+            throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized to update this parcel");
+        }
+        if(parcel.currentStatus !== 'Requested' && parcel.currentStatus !== 'Approved') {
+            throw new AppError(StatusCodes.BAD_REQUEST, "Parcel already in dispatched or processed.");
+        }
+        parcel.currentStatus = ParcelStatus.Canceled;
+        parcel.isCancelled = true;
+        parcel.trackingEvents.push({
+            status: ParcelStatus.Canceled,
+            note: "Parcel has been canceled by sender.",
+            updatedBy: user._id.toString(),
+        });        
+    }
+
+    //receiver can confirm 'delivery'
+    else if(user.role === "receiver") {
+        if(parcel.receiver?.toString() !== user._id.toString()) {
+            throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized to update this parcel");
+        }
+        if(parcel.currentStatus !== 'In Transit') {
+            throw new AppError(StatusCodes.BAD_REQUEST, "Parcel is not in transit yet.");
+        }
+        parcel.currentStatus = ParcelStatus.Delivered;
+        parcel.isPaid = true;
+        parcel.trackingEvents.push({
+            status: ParcelStatus.Delivered,
+            note: "Parcel is received & status updated by receiver.",
+            updatedBy: user._id.toString(),
+        });
+    }
+    else {
+        throw new AppError(StatusCodes.FORBIDDEN, "Unauthorized access!");
+    } 
+
+    await parcel.save();
+    return parcel;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const updateParcelStatusByAdmin = async(payload: any, id: string, email:string) => {
+
+    const user = await User.findOne({ email: email });
+    if (!user) {            
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+
+
+    const parcel = await Parcel.findById(id);
+    if (!parcel) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
+    }
+
+    if(user.role !== "admin") {
+        throw new AppError(StatusCodes.FORBIDDEN, "Only admin can update parcel status");
+    }
+
+    parcel.currentStatus = payload.currentStatus;
+    if (payload.currentStatus === ParcelStatus.Canceled) {
+        parcel.isCancelled = true;
+    } else if (payload.currentStatus === ParcelStatus.Delivered) {
+        parcel.isPaid = true;
+    } else if(payload.currentStatus === ParcelStatus.Returned){
+        parcel.isPaid = false
+    } else if(payload.currentStatus === ParcelStatus.Blocked){
+        parcel.isBlocked =  true
+        parcel.isCancelled = true
+    }
+    
+    
+    if (!payload.currentStatus) {
+        throw new AppError(StatusCodes.BAD_REQUEST, "Current status is required.");
+    }
+    parcel.trackingEvents.push({
+        status: payload.currentStatus,
+        note: `Parcel status updated to ${payload.currentStatus} by admin.`,
+        location: payload.location || "N/A",
+        updatedBy: user._id.toString(),
+    });
+
+    await parcel.save();
+    return parcel;
+}
+
+
 export const ParcelService = {
     createParcel,
     getAllParcels,
-    getSingleParcel
+    getSingleParcel,
+    updateParcelStatus,
+    updateParcelStatusByAdmin,
+
 }

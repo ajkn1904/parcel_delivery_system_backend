@@ -70,6 +70,11 @@ export const createParcelZodSchema = z.object({
     .optional()
     .default(false),
 
+  isBlocked: z
+    .boolean({ error: "It must be true or false" })
+    .optional()
+    .default(false),
+
   trackingEvents: z
     .array(
       z.object({

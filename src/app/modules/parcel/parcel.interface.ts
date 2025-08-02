@@ -68,4 +68,5 @@ export interface IParcel extends Document {
 
   isPaid?: boolean;
   isCancelled?: boolean;
+  isBlocked ? : boolean;
 }
