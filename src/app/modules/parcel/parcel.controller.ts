@@ -18,12 +18,14 @@ const createParcel = catchAsync(async (req: Request, res: Response) => {
 
 const getAllParcels = catchAsync(async (req: Request, res: Response) => {
     const user = req.user as JwtPayload;
-    const parcel = await ParcelService.getAllParcels(user.email);
+    const query = req.query;
+    const parcel = await ParcelService.getAllParcels(user.email, query as Record<string, string>);
     sendResponse(res, {
       statusCode: 200,
       success: true,
       message: "Parcel Retrieved Successfully",
-      data: parcel,
+      data: parcel.data,
+      meta: parcel.meta
     });
 });
 

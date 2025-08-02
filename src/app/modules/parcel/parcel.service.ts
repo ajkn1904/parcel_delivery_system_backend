@@ -3,6 +3,8 @@ import AppError from "../../errorHelper/AppError";
 import { IParcel, ParcelStatus } from "./parcel.interface";
 import { Parcel } from "./parcel.model";
 import { User } from "../user/user.model";
+import { QueryBuilder } from "../../utils/queryBuilder";
+import { parcelSearchableFields } from "./parcel.constants";
 
 
 const getTrackingId = () => {
@@ -67,24 +69,94 @@ const createParcel = async (payload: IParcel, email:string) => {
     return newParcel;
 }
 
-const getAllParcels = async (email: string) => {
-    const user = await User.findOne({ email: email });
-    if (!user) {            
-        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
-    }
+// const getAllParcels = async (email: string, query: Record<string, string>) => {
+//     const user = await User.findOne({ email: email });
+//     if (!user) {            
+//         throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+//     }
 
-    if(user.role === "admin"){
-        return await Parcel.find();
-    }
-    if(user.role === "sender") {
-        return await Parcel.find({ sender: user._id });
-    }
-    if(user.role === "receiver") {
-        return await Parcel.find({ receiver: user._id });
-    }
 
-    return [];
-}
+
+//     if(user.role === "admin"){
+//         //return await Parcel.find();
+//         const queryBuilder = new QueryBuilder(Parcel.find(), query)
+
+//         const parcels = await queryBuilder.search(parcelSearchableFields).filter().sort().fields().paginate()
+//         const [data, meta] = await Promise.all([
+//             parcels.build(),
+//             queryBuilder.getMeta()
+//         ])
+//             return {
+//             data,
+//             meta
+//         };
+//     }
+//     if(user.role === "sender") {
+//         //return await Parcel.find({ sender: user._id });
+//         const queryBuilder = new QueryBuilder(Parcel.find({ sender: user._id }), query)
+
+//         const parcel = await queryBuilder.search(parcelSearchableFields).filter().sort().fields().paginate()
+//         const [data, meta] = await Promise.all([
+//             parcel.build(),
+//             queryBuilder.getMeta()
+//         ])
+//             return {
+//             data,
+//             meta
+//         };
+//     }
+//     if(user.role === "receiver") {
+//         //return await Parcel.find({ receiver: user._id });
+//         const queryBuilder = new QueryBuilder(Parcel.find({ receiver: user._id }), query)
+
+//         const parcel = await queryBuilder.search(parcelSearchableFields).filter().sort().fields().paginate()
+//         const [data, meta] = await Promise.all([
+//             parcel.build(),
+//             queryBuilder.getMeta()
+//         ])
+//             return {
+//             data,
+//             meta
+//         };
+//     }
+
+//     return [];
+// }
+
+const getAllParcels = async (email: string, queryParams: Record<string, string>) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+  }
+
+  // eslint-disable-next-line prefer-const
+  let filter: Record<string, unknown> = {};
+
+  if (user.role === "sender") {
+    filter.sender = user._id;
+  } else if (user.role === "receiver") {
+    filter.receiver = user._id;
+  } else if (user.role !== "admin") {
+    throw new AppError(StatusCodes.FORBIDDEN, "User role is not permitted to view parcels");
+  }
+
+  const queryBuilder = new QueryBuilder(Parcel.find(filter), queryParams);
+
+  const queryChain = await queryBuilder
+    .search(parcelSearchableFields)
+    .filter()
+    .sort()
+    .fields()
+    .paginate();
+
+  const [data, meta] = await Promise.all([
+    queryChain.build(),
+    queryBuilder.getMeta(),
+  ]);
+
+  return { data, meta };
+};
+
 
 
 const getSingleParcel = async (id: string, email: string, decodedRole: string) => {
