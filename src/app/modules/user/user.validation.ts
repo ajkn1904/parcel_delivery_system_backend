@@ -29,14 +29,14 @@ export const createZodSchema = z.object({
     .regex(/^(?=.*\d)/, {
       message: "Password must contain at least 1 number.",
     }),
-
+  role: z.enum(Object.values(Role) as [string]),
   phone: z
-    .string({ error: "Phone must be a string" })
-    .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
-      message:
-        "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
-    })
-    .optional(),
+  .string({ error: "Phone must be a string" })
+  .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
+    message:
+      "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
+  })
+  .optional(),
 
   address: z
     .string({ error: "Address must be a string" })

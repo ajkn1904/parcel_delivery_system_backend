@@ -27,6 +27,7 @@ exports.createZodSchema = zod_1.z.object({
         .regex(/^(?=.*\d)/, {
         message: "Password must contain at least 1 number.",
     }),
+    role: zod_1.z.enum(Object.values(user_interface_1.Role)),
     phone: zod_1.z
         .string({ error: "Phone must be a string" })
         .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
