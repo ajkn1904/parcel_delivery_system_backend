@@ -1,0 +1,536 @@
+{
+	"info": {
+		"_postman_id": "140bf867-ee17-484f-9666-e722a6e77f2d",
+		"name": "Parcel Delivery System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28658692"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"dd\",\r\n    \"email\": \"h@gmail.com\",\r\n    \"password\": \"Abc@123\",\r\n    \"role\": \"sender\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/register"
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQxNjg3MzIsImV4cCI6MTc1NDM0MTUzMn0.mkEvSAiZU3oLmCmCWchAPJzoyoR2kr31z5qrRtG4CTI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/",
+							"protocol": "https",
+							"host": [
+								"parcel-delivery-system-backend-sigma",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "sender",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTgzNzA0LCJleHAiOjE3NTQxNTY1MDR9.BeGaL-CLwBhdxS_0iL_CN_NQL0Cv2ACJi7oXGY5J4Ls",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/688a99f56db1e0093a6e3e55",
+							"protocol": "https",
+							"host": [
+								"parcel-delivery-system-backend-sigma",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"user",
+								"688a99f56db1e0093a6e3e55"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQwNzU5MjcsImV4cCI6MTc1NDI0ODcyN30.pWxhPVLc3LDn9YuuNePqbEdyuvzRCFwnkg5Tm1mBtdE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"sender\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/688f3d49f7c499b84c2b4e4e"
+					},
+					"response": []
+				},
+				{
+					"name": "delete own account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTkwMDMzLCJleHAiOjE3NTQxNjI4MzN9.PaFfGzpr2z4upgVmrsFKHLSNwGEBoQxhwPI9ETZeUBM",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/me"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "coupon",
+			"item": [
+				{
+					"name": "create coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"demo\",\r\n  \"discountPercentage\": 1,\r\n  \"expiryDate\": \"2025-08-05T10:43:05.065Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/create"
+					},
+					"response": []
+				},
+				{
+					"name": "get all coupon",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/"
+					},
+					"response": []
+				},
+				{
+					"name": "get single coupon",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f434ac9a97367c2df93c5",
+							"protocol": "https",
+							"host": [
+								"parcel-delivery-system-backend-sigma",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"coupon",
+								"688f434ac9a97367c2df93c5"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update coupon",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"discountPercentage\": 11\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f4576c9a97367c2df93db"
+					},
+					"response": []
+				},
+				{
+					"name": "delete coupon",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f4576c9a97367c2df93db"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "parcels",
+			"item": [
+				{
+					"name": "create parcel",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmM2QzZWY3YzQ5OWI4NGMyYjRlNDgiLCJlbWFpbCI6ImVAZ21haWwuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDIyMDYxOSwiZXhwIjoxNzU0MzkzNDE5fQ.esKPSXAa2RuYw7QmzExhJNPmbRedYGtav7EJFLky0K0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"receiver\": \"688a99f56db1e0093a6e3e55\",\r\n  \"parcelType\": \"Clothing\",\r\n  \"weight\": 3,\r\n  \"deliveryMethod\": \"Agent\",\r\n  \"pickupAddress\": \"Dhaka\",\r\n  \"deliveryAddress\": \"chittagong\",\r\n  \"deliveryDistance\": 7,\r\n  \"contactPhone\": \"01812345678\",\r\n  \"estimatedDeliveryDate\": \"2025-08-05T00:00:00.000Z\",\r\n  \"paymentMethod\": \"Cash on Delivery\",\r\n  \"coupon\": \"688f434ac9a97367c2df93c5\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/create"
+					},
+					"response": []
+				},
+				{
+					"name": "get all parcel",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhOTZlODEzM2NkNTJlZGQwZDkzMzYiLCJlbWFpbCI6Im5pc2hhdEBnbWFpbC5jb20iLCJyb2xlIjoic2VuZGVyIiwiaWF0IjoxNzU0MTcyNTIxLCJleHAiOjE3NTQzNDUzMjF9.LSckGgfEuCZ2oM_WAnjNOcZ2acocrRdbneSWiuCa0j8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/?",
+							"protocol": "https",
+							"host": [
+								"parcel-delivery-system-backend-sigma",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"parcel",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "syl",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "deliveryMethod",
+									"value": "Agent",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single parcel",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiY2JkMmRjMDAyYjFkN2Y2NmUxYjUiLCJlbWFpbCI6ImthaWYxQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDE2MzAwOCwiZXhwIjoxNzU0MzM1ODA4fQ.yJbOq1HOOEjhXDrXHXirw6rZ9Qe3FAvEhng0s9fsyJo",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/688d24e9ebcd0165697e3266"
+					},
+					"response": []
+				},
+				{
+					"name": "update status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiY2JkMmRjMDAyYjFkN2Y2NmUxYjUiLCJlbWFpbCI6ImthaWYxQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDE1MzEyNSwiZXhwIjoxNzU0MzI1OTI1fQ.hB-SZy8ffiOyyzkB5-0CWmZAQlxC_rHJKk8opldHhKM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/status/688d28c16cf693c73751d618"
+					},
+					"response": []
+				},
+				{
+					"name": "update by admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQxNTUwNTUsImV4cCI6MTc1NDMyNzg1NX0.7A7rX8XLbSCAzx1TbJL3a1R5RsZNVBVsevpxK0aOlS0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentStatus\": \"Blocked\",\r\n    \"location\": \"Dhaka\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/admin/status/688d24e9ebcd0165697e3266"
+					},
+					"response": []
+				},
+				{
+					"name": "delete parcel",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQxNTUwNTUsImV4cCI6MTc1NDMyNzg1NX0.7A7rX8XLbSCAzx1TbJL3a1R5RsZNVBVsevpxK0aOlS0",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/688f56694a805cd5a39bd770"
+					},
+					"response": []
+				},
+				{
+					"name": "track history",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiY2JkMmRjMDAyYjFkN2Y2NmUxYjUiLCJlbWFpbCI6ImthaWYxQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDE2MzAwOCwiZXhwIjoxNzU0MzM1ODA4fQ.yJbOq1HOOEjhXDrXHXirw6rZ9Qe3FAvEhng0s9fsyJo",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/history/688d24e9ebcd0165697e3266"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//admin\r\n{\r\n    \"email\": \"pds_admin@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n//receiver\r\n// {\r\n//     \"email\": \"a@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n// {\r\n//     \"email\": \"kaif1@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n\r\n\r\n//sender\r\n// {\r\n//     \"email\": \"nishat@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n// {\r\n//     \"email\": \"e@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTg0MDE0LCJleHAiOjE3NTQxNTY4MTR9.KKWXmoG9AkMi5rznrk5JNnW34C7-47uQ8vL_rJ5VBxI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/auth/refresh-token"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTkwMDMzLCJleHAiOjE3NTQxNjI4MzN9.PaFfGzpr2z4upgVmrsFKHLSNwGEBoQxhwPI9ETZeUBM",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/auth/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTg0MDk1LCJleHAiOjE3NTQxNTY4OTV9.yIvVFSGRtgHWmARaxm3JcUPTECJKUp0XcBCQ-OihBok",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"oldPassword\": \"123456\",\r\n\"newPassword\": \"Abc@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/auth/reset-password"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
