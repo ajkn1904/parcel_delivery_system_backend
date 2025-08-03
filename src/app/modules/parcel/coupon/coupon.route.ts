@@ -8,7 +8,7 @@ import { CouponController } from "./coupon.controller";
 
 const router = Router();
 
-router.post("/", checkAuth(Role.admin, Role.sender), validationRequest(createCouponZodSchema), CouponController.createCoupon);
+router.post("/create", checkAuth(Role.admin, Role.sender), validationRequest(createCouponZodSchema), CouponController.createCoupon);
 
 router.get("/", checkAuth(Role.admin, Role.sender), CouponController.getAllCoupons);
 
