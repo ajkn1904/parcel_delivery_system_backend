@@ -62,10 +62,11 @@ const updateUser = async (userId: string, payload: Partial<IUser>, decodedToken:
 
 
 
-const getAllUsers = async () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getAllUsers = async (query: Record<string, any>) => {
 
-  const users = await User.find();
-  const totalUsers = await User.countDocuments();
+  const users = await User.find(query);
+  const totalUsers = await User.countDocuments(query);
 
   return {
     users,
