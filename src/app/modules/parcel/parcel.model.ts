@@ -23,7 +23,6 @@ const StatusLogSchema = new Schema<IStatusLog>(
   { _id: false, timestamps: true }
 );
 
-
 const couponSchema = new Schema<ICoupon>(
   {
     code: {
@@ -45,15 +44,11 @@ const couponSchema = new Schema<ICoupon>(
   },
   {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
   }
 );
 
 export const Coupon = model<ICoupon>("Coupon", couponSchema);
-
-
-
-
 
 const ParcelSchema = new Schema<IParcel>(
   {
@@ -127,24 +122,24 @@ const ParcelSchema = new Schema<IParcel>(
       enum: Object.values(PaymentMethod),
       required: true,
     },
-    
-    deliveryFee: {
-      type: Number,
-      required: true,
-    },
+
     coupon: {
       type: Schema.Types.ObjectId,
       ref: "Coupon",
       required: false,
     },
     discountAmount: {
-      type: Number,
-      default: 0,
-    },
-    afterDiscountFee: {
-      type: Number,
+      type: String,
+      default: "0 tk",
     },
 
+    deliveryFee: {
+      type: Number,
+      required: true,
+    },
+    afterDiscountDeliveryFee: {
+      type: Number,
+    },
 
     isPaid: {
       type: Boolean,

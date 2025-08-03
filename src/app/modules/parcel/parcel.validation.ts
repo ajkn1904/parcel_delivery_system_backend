@@ -89,28 +89,26 @@ export const createParcelZodSchema = z.object({
     .optional(),
 
 
-  deliveryFee: z
-    .number({ error: "Delivery fee must be a number" })
-    .nonnegative({ message: "Delivery fee cannot be negative" })
-    .optional(),
-      
   coupon: z
     .string()
     .optional()
     .or(z.literal("").transform(() => undefined)),
-  
+
   discountAmount: z
-    .number({ error: "Discount must be a number" })
-    .nonnegative()
+    .string({ error: "Discount must be a string" })
     .optional(),
-  
-  afterDiscountFee: z
+
+
+  deliveryFee: z
+    .number({ error: "Delivery fee must be a number" })
+    .nonnegative({ message: "Delivery fee cannot be negative" })
+    .optional(),
+
+  afterDiscountDeliveryFee: z
     .number({ error: "Final fee must be a number" })
     .nonnegative()
     .optional(),
-    
 });
-
 
 // Zod schema for updating a parcel (partial)
 export const updateParcelZodSchema = createParcelZodSchema.partial();

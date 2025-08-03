@@ -61,12 +61,13 @@ export interface IParcel extends Document {
   estimatedDeliveryDate: Date;
   paymentMethod: PaymentMethod;
 
-  deliveryFee: number;
   coupon?: Types.ObjectId;
-  discountAmount?: number;
-  afterDiscountFee?: number;
+  discountAmount?: string;
+  
+  deliveryFee: number;
+  afterDiscountDeliveryFee?: number;
 
   isPaid?: boolean;
   isCancelled?: boolean;
-  isBlocked ? : boolean;
+  isBlocked?: boolean;
 }

@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errorHelper/AppError";
 import { IParcel, ParcelStatus } from "./parcel.interface";
-import { Parcel } from "./parcel.model";
+import { Coupon, Parcel } from "./parcel.model";
 import { User } from "../user/user.model";
 import { QueryBuilder } from "../../utils/queryBuilder";
 import { parcelSearchableFields } from "./parcel.constants";
@@ -15,20 +15,8 @@ const getDeliveryFee = (weight: number, distanceKm: number): number => {
   if (weight < 2) {
     return 50;
   } else {
-    return 50 + (10 * distanceKm);
+    return 50 + (.75 * distanceKm);
   }
-}
-
-const applyCouponDiscount = (deliveryFee: number, hasCoupon: boolean) : { discountAmount: number; afterDiscountFee: number; } => {
-  if (hasCoupon) {
-    const discountAmount = Math.round(deliveryFee * 0.15);
-    const afterDiscountFee = deliveryFee - discountAmount;
-    return { discountAmount, afterDiscountFee };
-  }
-  return {
-     discountAmount: 0, 
-     afterDiscountFee: deliveryFee 
-    };
 }
 
 
@@ -48,14 +36,28 @@ const createParcel = async (payload: IParcel, email:string) => {
     }
 
     const trackingId = getTrackingId();
+
+    const deliveryFee = getDeliveryFee(payload.weight, payload.deliveryDistance || 0);
+    
     
     const hasCoupon = !!payload.coupon;
     if(hasCoupon){
-        const { discountAmount,afterDiscountFee } = applyCouponDiscount(payload.deliveryFee, hasCoupon);
-        payload.discountAmount = discountAmount;
-        payload.afterDiscountFee = afterDiscountFee;
+        const coupon = await Coupon.findById(payload.coupon);
+        if (!coupon) {
+            throw new AppError(StatusCodes.BAD_REQUEST, "Invalid coupon");
+        }
+        
+        if (new Date(coupon.expiryDate) < new Date()) {
+            throw new AppError(StatusCodes.BAD_REQUEST, "Coupon has expired");
+        }
+        
+        
+        const discountAmount = Math.round((deliveryFee * coupon.discountPercentage) / 100);
+         const afterDiscountDeliveryFee = deliveryFee - discountAmount;
+
+         payload.discountAmount =`${discountAmount} tk`;
+         payload.afterDiscountDeliveryFee = afterDiscountDeliveryFee;
     }    
-    const deliveryFee = getDeliveryFee(payload.weight, payload.deliveryDistance || 0);
     
     
     const parcelPayload = {
