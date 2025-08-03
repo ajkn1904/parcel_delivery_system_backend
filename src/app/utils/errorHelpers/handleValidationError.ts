@@ -10,7 +10,7 @@ export const handleValidationError = (err: mongoose.Error.ValidationError): TGen
     const errors = Object.values(err.errors)
 
     errors.forEach((errorObject: any) => errorSources.push({
-        path: errorObject.path,
+        name: errorObject.path,
         message: errorObject.message
     }))
 
