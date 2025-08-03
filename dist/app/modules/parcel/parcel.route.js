@@ -12,7 +12,7 @@ router.post("/create", (0, validationRequest_1.validationRequest)(parcel_validat
 router.get("/", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), parcel_controller_1.ParcelController.getAllParcels);
 router.get("/:id", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), parcel_controller_1.ParcelController.getSingleParcel);
 router.get("/history/:id", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), parcel_controller_1.ParcelController.trackParcel);
-router.patch("/status/:id", (0, validationRequest_1.validationRequest)(parcel_validation_1.updateParcelZodSchema), (0, checkAuth_1.checkAuth)(user_interface_1.Role.sender, user_interface_1.Role.receiver), parcel_controller_1.ParcelController.updateParcelStatus);
+router.patch("/status/:id", (0, checkAuth_1.checkAuth)(user_interface_1.Role.sender, user_interface_1.Role.receiver), parcel_controller_1.ParcelController.updateParcelStatus);
 router.patch("/admin/status/:id", (0, validationRequest_1.validationRequest)(parcel_validation_1.updateParcelZodSchema), (0, checkAuth_1.checkAuth)(user_interface_1.Role.admin), parcel_controller_1.ParcelController.updateParcelStatusByAdmin);
 router.delete("/:id", (0, checkAuth_1.checkAuth)(user_interface_1.Role.admin), parcel_controller_1.ParcelController.deleteParcel);
 exports.ParcelRoutes = router;

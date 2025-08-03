@@ -17,7 +17,7 @@ router.get("/:id", checkAuth(...Object.values(Role)), ParcelController.getSingle
 
 router.get("/history/:id", checkAuth(...Object.values(Role)), ParcelController.trackParcel);
 
-router.patch("/status/:id", validationRequest(updateParcelZodSchema), checkAuth(Role.sender, Role.receiver), ParcelController.updateParcelStatus);
+router.patch("/status/:id", checkAuth(Role.sender, Role.receiver), ParcelController.updateParcelStatus);
 
 router.patch("/admin/status/:id", validationRequest(updateParcelZodSchema), checkAuth(Role.admin), ParcelController.updateParcelStatusByAdmin);
 
