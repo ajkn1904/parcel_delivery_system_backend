@@ -62,7 +62,7 @@ const createParcel = async (payload: IParcel, email:string) => {
         ...payload,
         sender: user._id,
         trackingId: trackingId,
-        deliveryFee: deliveryFee,
+        deliveryFee: Number(deliveryFee),
     }
 
     const newParcel = await Parcel.create(parcelPayload);

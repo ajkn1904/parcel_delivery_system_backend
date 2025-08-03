@@ -9,7 +9,8 @@ import {
 export const createParcelZodSchema = z.object({
   sender: z
     .string({ error: "Sender must be a valid user ID" })
-    .min(1, { message: "Sender ID is required" }),
+    .min(1, { message: "Sender ID is required" })
+    .optional(),
 
   receiver: z
     .string({ error: "Receiver must be a valid user ID" })
@@ -17,7 +18,8 @@ export const createParcelZodSchema = z.object({
 
   trackingId: z
     .string({ error: "Tracking ID must be a string" })
-    .min(1, { message: "Tracking ID is required" }),
+    .min(1, { message: "Tracking ID is required" })
+    .optional(),
 
   parcelType: z.enum(Object.values(ParcelType) as [string], {
     error: "Parcel type is required",
@@ -89,7 +91,8 @@ export const createParcelZodSchema = z.object({
 
   deliveryFee: z
     .number({ error: "Delivery fee must be a number" })
-    .nonnegative({ message: "Delivery fee cannot be negative" }),
+    .nonnegative({ message: "Delivery fee cannot be negative" })
+    .optional(),
       
   coupon: z
     .string()
