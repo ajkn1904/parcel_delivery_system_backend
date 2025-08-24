@@ -24,7 +24,10 @@ app.use(cookieParser());
 
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: [envVars.FRONTEND_URL],
+  credentials: true
+}));
 
 app.use("/api", router)
 
