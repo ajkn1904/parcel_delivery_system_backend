@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 import { catchAsync } from "../../utils/catchAsync";
 import { ParcelAnalyticsService } from "./analytic.service";
+import { JwtPayload } from "jsonwebtoken";
 
 const getDeliveryStatusDistribution = catchAsync(async (req: Request, res: Response) => {
-  const result = await ParcelAnalyticsService.getDeliveryStatusDistribution();
+    const user = (req.user as JwtPayload).email;
+  const result = await ParcelAnalyticsService.getDeliveryStatusDistribution(user);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -14,7 +16,8 @@ const getDeliveryStatusDistribution = catchAsync(async (req: Request, res: Respo
 });
 
 const getMonthlyShipments = catchAsync(async (req: Request, res: Response) => {
-  const result = await ParcelAnalyticsService.getMonthlyShipments();
+  const user = (req.user as JwtPayload).email;
+  const result = await ParcelAnalyticsService.getMonthlyShipments(user);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -24,7 +27,8 @@ const getMonthlyShipments = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getParcelTrends = catchAsync(async (req: Request, res: Response) => {
-  const result = await ParcelAnalyticsService.getParcelTrends();
+  const user = (req.user as JwtPayload).email;
+  const result = await ParcelAnalyticsService.getParcelTrends(user);
   sendResponse(res, {
     statusCode: 200,
     success: true,
