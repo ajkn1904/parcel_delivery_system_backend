@@ -78,7 +78,7 @@ const getAllUsers = async (query: Record<string, any>) => {
 
 
 const getSingleUser = async (id: string) => {
-    const user = await User.findById(id);
+    const user = await User.findById(id).select("-password");
     if (!user) {
       throw new AppError(StatusCodes.NOT_FOUND, "User Not Found");
     }
@@ -86,6 +86,15 @@ const getSingleUser = async (id: string) => {
         data: user
     }
 };
+
+
+const getMe = async (userId: string) => {
+  const user = await User.findById(userId).select("-password");
+  return {
+      data: user
+  }
+}
+
 
 const deleteOwnAccount = async (email: string) => {
   const user = await User.findOne({ email, isDeleted: { $ne: true } });
@@ -110,5 +119,6 @@ export const userServices = {
   getAllUsers,
   getSingleUser,
   updateUser,
-  deleteOwnAccount
+  deleteOwnAccount,
+  getMe
 };

@@ -80,10 +80,16 @@ const getAllUsers = (query) => __awaiter(void 0, void 0, void 0, function* () {
     };
 });
 const getSingleUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.User.findById(id);
+    const user = yield user_model_1.User.findById(id).select("-password");
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "User Not Found");
     }
+    return {
+        data: user
+    };
+});
+const getMe = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.findById(userId).select("-password");
     return {
         data: user
     };
@@ -105,5 +111,6 @@ exports.userServices = {
     getAllUsers,
     getSingleUser,
     updateUser,
-    deleteOwnAccount
+    deleteOwnAccount,
+    getMe
 };

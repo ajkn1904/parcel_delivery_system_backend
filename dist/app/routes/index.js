@@ -6,6 +6,7 @@ const user_route_1 = require("../modules/user/user.route");
 const auth_route_1 = require("../modules/auth/auth.route");
 const parcel_route_1 = require("../modules/parcel/parcel.route");
 const coupon_route_1 = require("../modules/parcel/coupon/coupon.route");
+const analytic_route_1 = require("../modules/analytics/analytic.route");
 exports.router = (0, express_1.Router)();
 const moduleRoutes = [
     {
@@ -23,6 +24,10 @@ const moduleRoutes = [
     {
         path: "/coupon",
         route: coupon_route_1.CouponRoutes,
+    },
+    {
+        path: "/analytics",
+        route: analytic_route_1.ParcelAnalyticRoutes,
     },
 ];
 moduleRoutes.forEach((route) => {

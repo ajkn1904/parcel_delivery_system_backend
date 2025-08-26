@@ -68,10 +68,21 @@ const deleteOwnAccount = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(vo
         data: null
     });
 }));
+const getMe = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const decodedToken = req.user;
+    const result = yield user_service_1.userServices.getMe(decodedToken.userId);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_codes_1.StatusCodes.CREATED,
+        message: "Your profile Retrieved Successfully",
+        data: result.data
+    });
+}));
 exports.userController = {
     createUser,
     getAllUsers,
     getSingleUser,
     updateUser,
-    deleteOwnAccount
+    deleteOwnAccount,
+    getMe
 };

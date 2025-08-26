@@ -85,12 +85,12 @@ const logout = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0
     res.clearCookie("accessToken", {
         httpOnly: true,
         secure: false,
-        sameSite: "lax"
+        sameSite: "none"
     });
     res.clearCookie("refreshToken", {
         httpOnly: true,
         secure: false,
-        sameSite: "lax"
+        sameSite: "none"
     });
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
