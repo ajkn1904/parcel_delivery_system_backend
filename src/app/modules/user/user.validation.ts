@@ -56,13 +56,6 @@ export const updateZodSchema = z.object({
     .trim()
     .optional(),
 
-  email: z
-    .string({ error: "Email must be a string" })
-    .email({ message: "Invalid email format" })
-    .max(100, { message: "Email cannot exceed 100 characters" })
-    .trim()
-    .optional(),
-
   password: z
     .string({ error: "Password must be a string" })
     .min(6, { message: "Password must be at least 6 characters" })

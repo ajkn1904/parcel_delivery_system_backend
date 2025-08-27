@@ -47,12 +47,6 @@ exports.updateZodSchema = zod_1.z.object({
         .max(50, { message: "Name must be less than 50 characters" })
         .trim()
         .optional(),
-    email: zod_1.z
-        .string({ error: "Email must be a string" })
-        .email({ message: "Invalid email format" })
-        .max(100, { message: "Email cannot exceed 100 characters" })
-        .trim()
-        .optional(),
     password: zod_1.z
         .string({ error: "Password must be a string" })
         .min(6, { message: "Password must be at least 6 characters" })
