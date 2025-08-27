@@ -126,7 +126,8 @@ const getAllParcels = (email, queryParams) => __awaiter(void 0, void 0, void 0, 
     else if (user.role !== "admin") {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "User role is not permitted to view parcels");
     }
-    const queryBuilder = new queryBuilder_1.QueryBuilder(parcel_model_1.Parcel.find(filter), queryParams);
+    //const queryBuilder = new QueryBuilder(Parcel.find(filter), queryParams);
+    const queryBuilder = new queryBuilder_1.QueryBuilder(parcel_model_1.Parcel.find(filter).populate('sender', 'email').populate('receiver', 'email'), queryParams);
     const queryChain = yield queryBuilder
         .search(parcel_constants_1.parcelSearchableFields)
         .filter()

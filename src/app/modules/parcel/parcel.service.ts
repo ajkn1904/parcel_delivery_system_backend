@@ -142,7 +142,9 @@ const getAllParcels = async (email: string, queryParams: Record<string, string>)
     throw new AppError(StatusCodes.FORBIDDEN, "User role is not permitted to view parcels");
   }
 
-  const queryBuilder = new QueryBuilder(Parcel.find(filter), queryParams);
+  //const queryBuilder = new QueryBuilder(Parcel.find(filter), queryParams);
+
+  const queryBuilder = new QueryBuilder(Parcel.find(filter).populate('sender', 'email').populate('receiver', 'email'),  queryParams);
 
   const queryChain = await queryBuilder
     .search(parcelSearchableFields)
