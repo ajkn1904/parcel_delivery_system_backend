@@ -114,11 +114,35 @@ const deleteOwnAccount = async (email: string) => {
 };
 
 
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getAllReceivers = async (decodedToken: JwtPayload, query: Record<string, any> = {}) => {
+  
+  if (decodedToken.role !== Role.sender) {
+    throw new AppError(StatusCodes.FORBIDDEN, "Only sender can fetch receivers");
+  }
+
+  const receiversQuery = { ...query, role: Role.receiver, isDeleted: { $ne: true } };
+
+  const users = await User.find(receiversQuery).select("_id email");
+
+  const totalReceivers = await User.countDocuments(receiversQuery);
+
+  return {
+    users,
+    meta: {
+      total: totalReceivers,
+    },
+  };
+};
+
+
 export const userServices = {
   createUser,
   getAllUsers,
   getSingleUser,
   updateUser,
   deleteOwnAccount,
-  getMe
+  getMe,
+  getAllReceivers
 };

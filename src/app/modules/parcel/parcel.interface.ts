@@ -2,7 +2,7 @@ import { Document, Types } from "mongoose";
 
 export enum ParcelType {
   Documents = "Documents",
-  Electronics = "Electronics",
+  Electronics = "Documents",
   Clothing = "Clothing",
   Grocery = "Grocery",
   Other = "Other",
@@ -16,6 +16,7 @@ export enum ParcelStatus {
   Delivered = "Delivered",
   Canceled = "Canceled",
   Blocked = "Blocked",
+  Unblocked = "Unblocked",
   Returned = "Returned",
 }
 
@@ -34,6 +35,7 @@ export interface IStatusLog {
   location?: string;
   note?: string;
   updatedBy?: string; // user id
+  updatedByRole?: string;
 }
 
 export interface ICoupon {

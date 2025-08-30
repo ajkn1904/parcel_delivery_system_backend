@@ -112,3 +112,10 @@ export const createParcelZodSchema = z.object({
 
 // Zod schema for updating a parcel (partial)
 export const updateParcelZodSchema = createParcelZodSchema.partial();
+
+
+export const updateParcelStatusByAdminZodSchema = z.object({
+  currentStatus: z.enum(Object.values(ParcelStatus) as [string]),
+  note: z.string().optional(),
+  location: z.string().optional(),
+});

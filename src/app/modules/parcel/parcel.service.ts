@@ -30,7 +30,8 @@ const createParcel = async (payload: IParcel, email:string) => {
     if(user.role !== 'sender') {
         throw new AppError(StatusCodes.FORBIDDEN, "Only sender can create a parcel");
     };
-    const isTrackingIdExists = await Parcel.findOne({ trackingId: payload.trackingId });
+    const isTrackingIdExists = await Parcel.findOne({ 
+        trackingId: payload.trackingId });
     if( isTrackingIdExists) {
         throw new AppError(StatusCodes.BAD_REQUEST, "Tracking ID already exists!");
     }
@@ -65,6 +66,12 @@ const createParcel = async (payload: IParcel, email:string) => {
         sender: user._id,
         trackingId: trackingId,
         deliveryFee: Number(deliveryFee),
+        trackingEvents: [
+            {
+            location: payload.pickupAddress,
+            note: 'Parcel Request Created.',
+            }
+        ]
     }
 
     const newParcel = await Parcel.create(parcelPayload);
@@ -164,27 +171,30 @@ const getAllParcels = async (email: string, queryParams: Record<string, string>)
 
 
 const getSingleParcel = async (id: string, email: string, decodedRole: string) => {
-    const user = await User.findOne({ email: email });
-    if (!user) {            
+    const user = await User.findOne({ email });
+    if (!user) {
         throw new AppError(StatusCodes.NOT_FOUND, "User not found");
     }
 
-    const parcel = await Parcel.findById(id);
+    const parcel = await Parcel.findById(id)
+        .populate("sender", "email")
+        .populate("receiver", "email");
     if (!parcel) {
         throw new AppError(StatusCodes.NOT_FOUND, "Parcel not found");
     }
 
-    if(decodedRole === "admin") {
+    if (decodedRole === "admin") {
         return parcel;
     }
-    else if(decodedRole === "sender" && parcel.sender?.toString() === user._id.toString()) {
+    if (decodedRole === "sender" && parcel.sender?._id.toString() === user._id.toString()) {
         return parcel;
     }
-    else if(decodedRole === "receiver" && parcel.receiver?.toString() === user._id.toString()) {
+    if (decodedRole === "receiver" && parcel.receiver?._id.toString() === user._id.toString()) {
         return parcel;
     }
-    else throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized to access this parcel");
-}
+
+    throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized to access this parcel");
+};
 
 
 const updateParcelStatus = async(id: string, email:string) => {
@@ -212,8 +222,10 @@ const updateParcelStatus = async(id: string, email:string) => {
         parcel.isCancelled = true;
         parcel.trackingEvents.push({
             status: ParcelStatus.Canceled,
-            note: "Parcel has been canceled by sender.",
+            note: "Parcel has been canceled.",
+            location: parcel.pickupAddress,
             updatedBy: user._id.toString(),
+            updatedByRole: user.role,
         });        
     }
 
@@ -229,8 +241,10 @@ const updateParcelStatus = async(id: string, email:string) => {
         parcel.isPaid = true;
         parcel.trackingEvents.push({
             status: ParcelStatus.Delivered,
-            note: "Parcel is received & status updated by receiver.",
+            note: "Parcel is received.",
+            location: parcel.deliveryAddress,
             updatedBy: user._id.toString(),
+            updatedByRole: user.role,
         });
     }
     else {
@@ -269,6 +283,9 @@ const updateParcelStatusByAdmin = async(payload: any, id: string, email:string) 
     } else if(payload.currentStatus === ParcelStatus.Blocked){
         parcel.isBlocked =  true
         parcel.isCancelled = true
+    } else if(payload.currentStatus === ParcelStatus.Unblocked){
+        parcel.isBlocked =  false
+        parcel.isCancelled = false
     }
     
     
@@ -278,10 +295,11 @@ const updateParcelStatusByAdmin = async(payload: any, id: string, email:string) 
 
 
     parcel.trackingEvents.push({
-        status: payload.currentStatus === "Blocked" ? "Canceled" : payload.currentStatus,
-        note: `Parcel status updated to ${payload.currentStatus === "Blocked" ? "Canceled" : payload.currentStatus} by admin.`,
-        location: payload.location || "N/A",
+        status: payload.currentStatus,
+        note: payload.note ?? `Parcel status updated to ${payload.currentStatus}.`,
+        location: payload.location,
         updatedBy: user._id.toString(),
+        updatedByRole: user.role,
     });
 
     await parcel.save();

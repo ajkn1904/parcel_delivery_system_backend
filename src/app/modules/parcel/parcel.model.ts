@@ -19,6 +19,7 @@ const StatusLogSchema = new Schema<IStatusLog>(
     location: { type: String },
     note: { type: String },
     updatedBy: { type: Types.ObjectId, ref: "User" },
+    updatedByRole: { type: String }
   },
   { _id: false, timestamps: true }
 );
@@ -109,7 +110,11 @@ const ParcelSchema = new Schema<IParcel>(
 
     trackingEvents: {
       type: [StatusLogSchema],
-      default: () => [{ status: ParcelStatus.Requested }],
+      default: () => [{ 
+        status: ParcelStatus.Requested,
+        note: undefined,
+        location: undefined,
+      }],
     },
 
     estimatedDeliveryDate: {

@@ -4,7 +4,7 @@ exports.DeliveryMethod = exports.PaymentMethod = exports.ParcelStatus = exports.
 var ParcelType;
 (function (ParcelType) {
     ParcelType["Documents"] = "Documents";
-    ParcelType["Electronics"] = "Electronics";
+    ParcelType["Electronics"] = "Documents";
     ParcelType["Clothing"] = "Clothing";
     ParcelType["Grocery"] = "Grocery";
     ParcelType["Other"] = "Other";
@@ -18,6 +18,7 @@ var ParcelStatus;
     ParcelStatus["Delivered"] = "Delivered";
     ParcelStatus["Canceled"] = "Canceled";
     ParcelStatus["Blocked"] = "Blocked";
+    ParcelStatus["Unblocked"] = "Unblocked";
     ParcelStatus["Returned"] = "Returned";
 })(ParcelStatus || (exports.ParcelStatus = ParcelStatus = {}));
 var PaymentMethod;

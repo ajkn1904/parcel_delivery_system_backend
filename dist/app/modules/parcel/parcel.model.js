@@ -12,6 +12,7 @@ const StatusLogSchema = new mongoose_1.Schema({
     location: { type: String },
     note: { type: String },
     updatedBy: { type: mongoose_1.Types.ObjectId, ref: "User" },
+    updatedByRole: { type: String }
 }, { _id: false, timestamps: true });
 const couponSchema = new mongoose_1.Schema({
     code: {
@@ -87,7 +88,11 @@ const ParcelSchema = new mongoose_1.Schema({
     },
     trackingEvents: {
         type: [StatusLogSchema],
-        default: () => [{ status: parcel_interface_1.ParcelStatus.Requested }],
+        default: () => [{
+                status: parcel_interface_1.ParcelStatus.Requested,
+                note: undefined,
+                location: undefined,
+            }],
     },
     estimatedDeliveryDate: {
         type: Date,

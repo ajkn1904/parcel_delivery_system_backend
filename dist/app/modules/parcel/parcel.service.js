@@ -40,7 +40,9 @@ const createParcel = (payload, email) => __awaiter(void 0, void 0, void 0, funct
         throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "Only sender can create a parcel");
     }
     ;
-    const isTrackingIdExists = yield parcel_model_1.Parcel.findOne({ trackingId: payload.trackingId });
+    const isTrackingIdExists = yield parcel_model_1.Parcel.findOne({
+        trackingId: payload.trackingId
+    });
     if (isTrackingIdExists) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Tracking ID already exists!");
     }
@@ -60,7 +62,12 @@ const createParcel = (payload, email) => __awaiter(void 0, void 0, void 0, funct
         payload.discountAmount = `${discountAmount} tk`;
         payload.afterDiscountDeliveryFee = afterDiscountDeliveryFee;
     }
-    const parcelPayload = Object.assign(Object.assign({}, payload), { sender: user._id, trackingId: trackingId, deliveryFee: Number(deliveryFee) });
+    const parcelPayload = Object.assign(Object.assign({}, payload), { sender: user._id, trackingId: trackingId, deliveryFee: Number(deliveryFee), trackingEvents: [
+            {
+                location: payload.pickupAddress,
+                note: 'Parcel Request Created.',
+            }
+        ] });
     const newParcel = yield parcel_model_1.Parcel.create(parcelPayload);
     return newParcel;
 });
@@ -142,25 +149,26 @@ const getAllParcels = (email, queryParams) => __awaiter(void 0, void 0, void 0, 
 });
 const getSingleParcel = (id, email, decodedRole) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
-    const user = yield user_model_1.User.findOne({ email: email });
+    const user = yield user_model_1.User.findOne({ email });
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "User not found");
     }
-    const parcel = yield parcel_model_1.Parcel.findById(id);
+    const parcel = yield parcel_model_1.Parcel.findById(id)
+        .populate("sender", "email")
+        .populate("receiver", "email");
     if (!parcel) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "Parcel not found");
     }
     if (decodedRole === "admin") {
         return parcel;
     }
-    else if (decodedRole === "sender" && ((_a = parcel.sender) === null || _a === void 0 ? void 0 : _a.toString()) === user._id.toString()) {
+    if (decodedRole === "sender" && ((_a = parcel.sender) === null || _a === void 0 ? void 0 : _a._id.toString()) === user._id.toString()) {
         return parcel;
     }
-    else if (decodedRole === "receiver" && ((_b = parcel.receiver) === null || _b === void 0 ? void 0 : _b.toString()) === user._id.toString()) {
+    if (decodedRole === "receiver" && ((_b = parcel.receiver) === null || _b === void 0 ? void 0 : _b._id.toString()) === user._id.toString()) {
         return parcel;
     }
-    else
-        throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "You are not authorized to access this parcel");
+    throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "You are not authorized to access this parcel");
 });
 const updateParcelStatus = (id, email) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
@@ -184,8 +192,10 @@ const updateParcelStatus = (id, email) => __awaiter(void 0, void 0, void 0, func
         parcel.isCancelled = true;
         parcel.trackingEvents.push({
             status: parcel_interface_1.ParcelStatus.Canceled,
-            note: "Parcel has been canceled by sender.",
+            note: "Parcel has been canceled.",
+            location: parcel.pickupAddress,
             updatedBy: user._id.toString(),
+            updatedByRole: user.role,
         });
     }
     //receiver can confirm 'delivery'
@@ -200,8 +210,10 @@ const updateParcelStatus = (id, email) => __awaiter(void 0, void 0, void 0, func
         parcel.isPaid = true;
         parcel.trackingEvents.push({
             status: parcel_interface_1.ParcelStatus.Delivered,
-            note: "Parcel is received & status updated by receiver.",
+            note: "Parcel is received.",
+            location: parcel.deliveryAddress,
             updatedBy: user._id.toString(),
+            updatedByRole: user.role,
         });
     }
     else {
@@ -212,6 +224,7 @@ const updateParcelStatus = (id, email) => __awaiter(void 0, void 0, void 0, func
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const updateParcelStatusByAdmin = (payload, id, email) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const user = yield user_model_1.User.findOne({ email: email });
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "User not found");
@@ -237,14 +250,19 @@ const updateParcelStatusByAdmin = (payload, id, email) => __awaiter(void 0, void
         parcel.isBlocked = true;
         parcel.isCancelled = true;
     }
+    else if (payload.currentStatus === parcel_interface_1.ParcelStatus.Unblocked) {
+        parcel.isBlocked = false;
+        parcel.isCancelled = false;
+    }
     if (!payload.currentStatus) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "Current status is required.");
     }
     parcel.trackingEvents.push({
-        status: payload.currentStatus === "Blocked" ? "Canceled" : payload.currentStatus,
-        note: `Parcel status updated to ${payload.currentStatus === "Blocked" ? "Canceled" : payload.currentStatus} by admin.`,
-        location: payload.location || "N/A",
+        status: payload.currentStatus,
+        note: (_a = payload.note) !== null && _a !== void 0 ? _a : `Parcel status updated to ${payload.currentStatus}.`,
+        location: payload.location,
         updatedBy: user._id.toString(),
+        updatedByRole: user.role,
     });
     yield parcel.save();
     return parcel;

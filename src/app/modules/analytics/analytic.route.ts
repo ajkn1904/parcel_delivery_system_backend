@@ -10,5 +10,6 @@ const router = Router();
 router.get("/status-distribution", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getDeliveryStatusDistribution);
 router.get("/monthly-shipments", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getMonthlyShipments);
 router.get("/trends", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getParcelTrends);
+router.get("/overview", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getOverviewData);
 
 export const ParcelAnalyticRoutes = router;

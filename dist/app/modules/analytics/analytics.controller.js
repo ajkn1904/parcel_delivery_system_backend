@@ -46,8 +46,19 @@ const getParcelTrends = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(voi
         data: result,
     });
 }));
+const getOverviewData = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user.email;
+    const result = yield analytic_service_1.ParcelAnalyticsService.getOverviewData(user);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: "Parcel overview retrieved successfully",
+        data: result,
+    });
+}));
 exports.ParcelAnalyticsController = {
     getDeliveryStatusDistribution,
     getMonthlyShipments,
-    getParcelTrends
+    getParcelTrends,
+    getOverviewData
 };

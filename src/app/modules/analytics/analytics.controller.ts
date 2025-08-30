@@ -37,9 +37,21 @@ const getParcelTrends = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getOverviewData = catchAsync(async (req: Request, res: Response) => {
+  const user = (req.user as JwtPayload).email;
+  const result = await ParcelAnalyticsService.getOverviewData(user);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Parcel overview retrieved successfully",
+    data: result,
+  });
+});
+
 
 export const ParcelAnalyticsController = {
     getDeliveryStatusDistribution,
     getMonthlyShipments,
-    getParcelTrends
+    getParcelTrends,
+    getOverviewData
 };

@@ -90,6 +90,20 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+const getAllReceivers = catchAsync(async (req: Request, res: Response) => {
+    const decodedToken = req.user as JwtPayload
+    const result = await userServices.getAllReceivers(decodedToken, req.query);
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: "All users retrieved successfully",
+        data: result.users,
+        meta: result.meta,
+    })
+
+})
+
 
 export const userController = {
   createUser,
@@ -97,5 +111,6 @@ export const userController = {
   getSingleUser,
   updateUser,
   deleteOwnAccount,
-  getMe
+  getMe,
+  getAllReceivers
 };

@@ -106,11 +106,27 @@ const deleteOwnAccount = (email) => __awaiter(void 0, void 0, void 0, function* 
     yield user.save();
     return { message: "Account deleted successfully" };
 });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getAllReceivers = (decodedToken_1, ...args_1) => __awaiter(void 0, [decodedToken_1, ...args_1], void 0, function* (decodedToken, query = {}) {
+    if (decodedToken.role !== user_interface_1.Role.sender) {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "Only sender can fetch receivers");
+    }
+    const receiversQuery = Object.assign(Object.assign({}, query), { role: user_interface_1.Role.receiver, isDeleted: { $ne: true } });
+    const users = yield user_model_1.User.find(receiversQuery).select("_id email");
+    const totalReceivers = yield user_model_1.User.countDocuments(receiversQuery);
+    return {
+        users,
+        meta: {
+            total: totalReceivers,
+        },
+    };
+});
 exports.userServices = {
     createUser,
     getAllUsers,
     getSingleUser,
     updateUser,
     deleteOwnAccount,
-    getMe
+    getMe,
+    getAllReceivers
 };

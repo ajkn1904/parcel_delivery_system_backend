@@ -10,4 +10,5 @@ const router = (0, express_1.Router)();
 router.get("/status-distribution", (0, checkAuth_1.checkAuth)(user_interface_1.Role.admin, user_interface_1.Role.sender), analytics_controller_1.ParcelAnalyticsController.getDeliveryStatusDistribution);
 router.get("/monthly-shipments", (0, checkAuth_1.checkAuth)(user_interface_1.Role.admin, user_interface_1.Role.sender), analytics_controller_1.ParcelAnalyticsController.getMonthlyShipments);
 router.get("/trends", (0, checkAuth_1.checkAuth)(user_interface_1.Role.admin, user_interface_1.Role.sender), analytics_controller_1.ParcelAnalyticsController.getParcelTrends);
+router.get("/overview", (0, checkAuth_1.checkAuth)(user_interface_1.Role.admin, user_interface_1.Role.sender), analytics_controller_1.ParcelAnalyticsController.getOverviewData);
 exports.ParcelAnalyticRoutes = router;

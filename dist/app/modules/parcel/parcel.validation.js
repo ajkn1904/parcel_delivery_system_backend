@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateParcelZodSchema = exports.createParcelZodSchema = void 0;
+exports.updateParcelStatusByAdminZodSchema = exports.updateParcelZodSchema = exports.createParcelZodSchema = void 0;
 const zod_1 = require("zod");
 const parcel_interface_1 = require("./parcel.interface");
 exports.createParcelZodSchema = zod_1.z.object({
@@ -83,3 +83,8 @@ exports.createParcelZodSchema = zod_1.z.object({
 });
 // Zod schema for updating a parcel (partial)
 exports.updateParcelZodSchema = exports.createParcelZodSchema.partial();
+exports.updateParcelStatusByAdminZodSchema = zod_1.z.object({
+    currentStatus: zod_1.z.enum(Object.values(parcel_interface_1.ParcelStatus)),
+    note: zod_1.z.string().optional(),
+    location: zod_1.z.string().optional(),
+});
