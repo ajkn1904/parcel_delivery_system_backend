@@ -6,10 +6,14 @@ import { Role } from "../user/user.interface";
 
 const router = Router();
 
-// Only admin can access analytics
+
 router.get("/status-distribution", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getDeliveryStatusDistribution);
-router.get("/monthly-shipments", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getMonthlyShipments);
+router.get("/monthly-shipments", checkAuth(...Object.values(Role)), ParcelAnalyticsController.getMonthlyShipments);
 router.get("/trends", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getParcelTrends);
 router.get("/overview", checkAuth(Role.admin, Role.sender), ParcelAnalyticsController.getOverviewData);
+
+//receiver only
+router.get("/receiver/success-metrics", checkAuth(Role.receiver), ParcelAnalyticsController.getReceiverSuccessMetrics);
+router.get("/receiver/delivery-performance", checkAuth(Role.receiver), ParcelAnalyticsController.getReceiverDeliveryPerformance);
 
 export const ParcelAnalyticRoutes = router;

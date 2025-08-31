@@ -158,6 +158,7 @@ const ParcelSchema = new Schema<IParcel>(
       type: Boolean,
       default: false,
     },
+    updatedAt:String
   },
   {
     timestamps: true,

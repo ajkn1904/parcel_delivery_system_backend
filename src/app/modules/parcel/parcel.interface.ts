@@ -2,7 +2,7 @@ import { Document, Types } from "mongoose";
 
 export enum ParcelType {
   Documents = "Documents",
-  Electronics = "Documents",
+  Electronics = "Electronics",
   Clothing = "Clothing",
   Grocery = "Grocery",
   Other = "Other",
@@ -72,4 +72,5 @@ export interface IParcel extends Document {
   isPaid?: boolean;
   isCancelled?: boolean;
   isBlocked?: boolean;
+  updatedAt?: Date
 }

@@ -49,9 +49,38 @@ const getOverviewData = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+//for receiver only
+const getReceiverSuccessMetrics = catchAsync(async (req: Request, res: Response) => {
+  const user = (req.user as JwtPayload).email;
+  const result = await ParcelAnalyticsService.getReceiverSuccessMetrics(user);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Receiver success metrics retrieved successfully",
+    data: result,
+  });
+});
+
+const getReceiverDeliveryPerformance = catchAsync(async (req: Request, res: Response) => {
+  const user = (req.user as JwtPayload).email;
+  const result = await ParcelAnalyticsService.getReceiverDeliveryPerformance(user);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Receiver delivery performance retrieved successfully",
+    data: result,
+  });
+});
+
+
+
 export const ParcelAnalyticsController = {
     getDeliveryStatusDistribution,
     getMonthlyShipments,
     getParcelTrends,
-    getOverviewData
+    getOverviewData,
+    getReceiverDeliveryPerformance,
+    getReceiverSuccessMetrics
 };

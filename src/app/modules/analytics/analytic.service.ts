@@ -34,7 +34,15 @@ const getMonthlyShipments = async (email: string) => {
     throw new AppError(StatusCodes.NOT_FOUND, "User not found");
   }
 
-  const filter = user.role === "admin" ? {} : { sender: user._id };
+  //const filter = user.role === "admin" ? {} : { sender: user._id };
+  let filter: Record<string, string> = {};
+
+  if (user.role === "sender") {
+    filter = { sender: user._id };
+  } else if (user.role === "receiver") {
+    filter = { receiver: user._id };
+  } 
+
 
   // Get current year range
   const startOfYear = new Date(new Date().getFullYear(), 0, 1); 
@@ -152,10 +160,132 @@ const getOverviewData = async (email: string) => {
 };
 
 
+//for receiver
+// Success Metrics
+const getReceiverSuccessMetrics = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+  }
+
+  const result = await Parcel.aggregate([
+    { $match: { receiver: user._id } },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+        delivered: {
+          $sum: { $cond: [{ $eq: ["$currentStatus", ParcelStatus.Delivered] }, 1, 0] }
+        },
+        canceled: {
+          $sum: { $cond: [{ $eq: ["$currentStatus", ParcelStatus.Canceled] }, 1, 0] }
+        },
+        returned: {
+          $sum: { $cond: [{ $eq: ["$currentStatus", ParcelStatus.Returned] }, 1, 0] }
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        total: 1,
+        delivered: 1,
+        canceled: 1,
+        returned: 1,
+      },
+    },
+  ]);
+
+  return result[0] || { total: 0, delivered: 0, canceled: 0, returned: 0 };
+};
+
+// Delivery Performance
+const getReceiverDeliveryPerformance = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+  }
+
+  // Current year range
+  const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+  const endOfYear = new Date(new Date().getFullYear() + 1, 0, 1);
+
+  const monthlyPerformance = await Parcel.aggregate([
+    { $match: { receiver: user._id, currentStatus: ParcelStatus.Delivered } },
+    {
+      $addFields: {
+        deliveredEvents: {
+          $filter: {
+            input: "$trackingEvents",
+            as: "ev",
+            cond: { $eq: ["$$ev.status", ParcelStatus.Delivered] },
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        deliveredAt: {
+          $let: {
+            vars: { last: { $arrayElemAt: ["$deliveredEvents", -1] } },
+            in: { $ifNull: ["$$last.createdAt", "$updatedAt"] },
+          },
+        },
+      },
+    },
+    { $match: { deliveredAt: { $gte: startOfYear, $lt: endOfYear } } },
+    {
+      $group: {
+        _id: { $dateToString: { format: "%Y-%m", date: "$deliveredAt" } },
+        onTime: {
+          $sum: {
+            $cond: [
+              { $lte: ["$deliveredAt", "$estimatedDeliveryDate"] },
+              1,
+              0,
+            ],
+          },
+        },
+        late: {
+          $sum: {
+            $cond: [
+              { $gt: ["$deliveredAt", "$estimatedDeliveryDate"] },
+              1,
+              0,
+            ],
+          },
+        },
+        totalDelivered: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id": 1 } },
+    {
+      $project: {
+        month: "$_id",
+        onTime: 1,
+        late: 1,
+        _id: 0,
+      },
+    },
+  ]);
+
+  const totalDelivered = monthlyPerformance.reduce((sum, m) => sum + m.onTime + m.late, 0);
+
+  return [
+      {
+        total: totalDelivered,
+        performance: monthlyPerformance,
+      },
+    ];
+};
+
+
 
 export const ParcelAnalyticsService = {
     getDeliveryStatusDistribution,
     getMonthlyShipments,
     getParcelTrends,
-    getOverviewData
+    getOverviewData,
+    getReceiverDeliveryPerformance,
+    getReceiverSuccessMetrics
 };
