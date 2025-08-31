@@ -56,9 +56,32 @@ const getOverviewData = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(voi
         data: result,
     });
 }));
+//for receiver only
+const getReceiverSuccessMetrics = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user.email;
+    const result = yield analytic_service_1.ParcelAnalyticsService.getReceiverSuccessMetrics(user);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: "Receiver success metrics retrieved successfully",
+        data: result,
+    });
+}));
+const getReceiverDeliveryPerformance = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user.email;
+    const result = yield analytic_service_1.ParcelAnalyticsService.getReceiverDeliveryPerformance(user);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: "Receiver delivery performance retrieved successfully",
+        data: result,
+    });
+}));
 exports.ParcelAnalyticsController = {
     getDeliveryStatusDistribution,
     getMonthlyShipments,
     getParcelTrends,
-    getOverviewData
+    getOverviewData,
+    getReceiverDeliveryPerformance,
+    getReceiverSuccessMetrics
 };

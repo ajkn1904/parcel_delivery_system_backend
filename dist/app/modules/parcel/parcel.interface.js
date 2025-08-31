@@ -4,7 +4,7 @@ exports.DeliveryMethod = exports.PaymentMethod = exports.ParcelStatus = exports.
 var ParcelType;
 (function (ParcelType) {
     ParcelType["Documents"] = "Documents";
-    ParcelType["Electronics"] = "Documents";
+    ParcelType["Electronics"] = "Electronics";
     ParcelType["Clothing"] = "Clothing";
     ParcelType["Grocery"] = "Grocery";
     ParcelType["Other"] = "Other";

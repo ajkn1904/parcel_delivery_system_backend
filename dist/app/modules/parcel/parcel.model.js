@@ -131,6 +131,7 @@ const ParcelSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    updatedAt: String
 }, {
     timestamps: true,
     versionKey: false,
