@@ -70,6 +70,8 @@ const createParcel = async (payload: IParcel, email:string) => {
             {
             location: payload.pickupAddress,
             note: 'Parcel Request Created.',
+            updatedBy: user._id,
+            updatedByRole: user.role
             }
         ]
     }

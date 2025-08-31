@@ -66,6 +66,8 @@ const createParcel = (payload, email) => __awaiter(void 0, void 0, void 0, funct
             {
                 location: payload.pickupAddress,
                 note: 'Parcel Request Created.',
+                updatedBy: user._id,
+                updatedByRole: user.role
             }
         ] });
     const newParcel = yield parcel_model_1.Parcel.create(parcelPayload);
