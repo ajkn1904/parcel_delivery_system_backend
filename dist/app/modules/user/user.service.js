@@ -57,6 +57,9 @@ const updateUser = (userId, payload, decodedToken) => __awaiter(void 0, void 0, 
         throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "You are not authorized!");
     }
     ;
+    if ((payload.isDeleted || payload.isBlocked) && ifUserExists.role === user_interface_1.Role.admin) {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "Admin users cannot be deleted or blocked.");
+    }
     if (payload.email) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "Email cannot be changed");
     }

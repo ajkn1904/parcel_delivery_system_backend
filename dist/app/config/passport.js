@@ -63,7 +63,7 @@ passport_1.default.use(new passport_google_oauth20_1.Strategy({
             user = yield user_model_1.User.create({
                 email,
                 name: profile.displayName,
-                role: user_interface_1.Role.receiver,
+                role: user_interface_1.Role.sender,
                 auths: [
                     {
                         provider: "google",

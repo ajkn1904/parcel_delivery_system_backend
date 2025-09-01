@@ -62,7 +62,7 @@ passport.use(
                 user = await User.create({
                     email,
                     name: profile.displayName,
-                    role: Role.receiver,
+                    role: Role.sender,
                     auths: [
                         {
                             provider: "google",

@@ -46,6 +46,12 @@ const updateUser = async (userId: string, payload: Partial<IUser>, decodedToken:
       throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized!");
   };
 
+
+  if ((payload.isDeleted || payload.isBlocked) && ifUserExists.role === Role.admin) {
+   throw new AppError(StatusCodes.FORBIDDEN, "Admin users cannot be deleted or blocked.");
+  }
+
+
   if (payload.email) {
     throw new AppError(StatusCodes.FORBIDDEN, "Email cannot be changed");
   };
