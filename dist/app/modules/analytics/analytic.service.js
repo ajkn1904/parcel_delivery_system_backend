@@ -118,7 +118,14 @@ const getOverviewData = (email) => __awaiter(void 0, void 0, void 0, function* (
     if (!user) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "User not found");
     }
-    const filter = user.role === "admin" ? {} : { sender: user._id };
+    //const filter = user.role === "admin" ? {} : { sender: user._id };
+    let filter = {};
+    if (user.role === "sender") {
+        filter = { sender: user._id };
+    }
+    else if (user.role === "receiver") {
+        filter = { receiver: user._id };
+    }
     const result = yield parcel_model_1.Parcel.aggregate([
         { $match: filter },
         {

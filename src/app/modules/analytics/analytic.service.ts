@@ -122,7 +122,15 @@ const getOverviewData = async (email: string) => {
     throw new AppError(StatusCodes.NOT_FOUND, "User not found");
   }
 
-  const filter = user.role === "admin" ? {} : { sender: user._id };
+  //const filter = user.role === "admin" ? {} : { sender: user._id };
+  let filter: Record<string, string> = {};
+
+  if (user.role === "sender") {
+    filter = { sender: user._id };
+  } else if (user.role === "receiver") {
+    filter = { receiver: user._id };
+  } 
+
 
   const result = await Parcel.aggregate([
     { $match: filter },
