@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"dd\",\r\n    \"email\": \"h@gmail.com\",\r\n    \"password\": \"Abc@123\",\r\n    \"role\": \"sender\"\r\n}",
+							"raw": "// {\r\n//     \"name\": \"test sender\",\r\n//     \"email\": \"sender@gmail.com\",\r\n//     \"password\": \"Abc@123\",\r\n//     \"role\": \"sender\"\r\n// }\r\n{\r\n    \"name\": \"test receiver\",\r\n    \"email\": \"receiver@gmail.com\",\r\n    \"password\": \"Abc@123\",\r\n    \"role\": \"receiver\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -34,7 +34,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQxNjg3MzIsImV4cCI6MTc1NDM0MTUzMn0.mkEvSAiZU3oLmCmCWchAPJzoyoR2kr31z5qrRtG4CTI",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyNDI5NjIsImV4cCI6MTc1NDQxNTc2Mn0.gdGboTbp4FHyihxtxau-na-USHPH60MY9_wKv4KHLA8",
 								"type": "text"
 							}
 						],
@@ -63,13 +63,83 @@
 					"response": []
 				},
 				{
+					"name": "get all receivers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmYTAxMDNlOTg4ZTAxNDE2ZjQ2ZWIiLCJlbWFpbCI6InNlbmRlckBnbWFpbC5jb20iLCJyb2xlIjoic2VuZGVyIiwiaWF0IjoxNzU2NTU1MzYyLCJleHAiOjE3NTY3MjgxNjJ9.lM6kOMAthwm4ELkkRZ0opHHtTbG8Gr2mc1u1VbxFfJs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/receivers",
+							"protocol": "https",
+							"host": [
+								"parcel-delivery-system-backend-sigma",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"user",
+								"receivers"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "sender",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyNDI5NjIsImV4cCI6MTc1NDQxNTc2Mn0.gdGboTbp4FHyihxtxau-na-USHPH60MY9_wKv4KHLA8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/me",
+							"protocol": "https",
+							"host": [
+								"parcel-delivery-system-backend-sigma",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"user",
+								"me"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "sender",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get single user",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTgzNzA0LCJleHAiOjE3NTQxNTY1MDR9.BeGaL-CLwBhdxS_0iL_CN_NQL0Cv2ACJi7oXGY5J4Ls",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmOWE5ZDlmNzE4NmJiOWY5OTM3ZTEiLCJlbWFpbCI6InNlbmRlckBnbWFpbC5jb20iLCJyb2xlIjoic2VuZGVyIiwiaWF0IjoxNzU0MjQxNzQ1LCJleHAiOjE3NTQ0MTQ1NDV9.qgmlevv6g5jDFHsHzqtheYHtcKwXrr3-eiWQKx-XyyM",
 								"type": "text"
 							}
 						],
@@ -104,20 +174,20 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQwNzU5MjcsImV4cCI6MTc1NDI0ODcyN30.pWxhPVLc3LDn9YuuNePqbEdyuvzRCFwnkg5Tm1mBtdE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTYzMDc3NzAsImV4cCI6MTc1NjQ4MDU3MH0.M7-BZkxz80fOngeqCxUTmh2O7uAACxEiTnVZUbVWJfw",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"role\": \"sender\"\r\n}",
+							"raw": "{\r\n    \"isBlocked\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/688f3d49f7c499b84c2b4e4e"
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/user/68ae0ecdb6645dfe79910d7a"
 					},
 					"response": []
 				},
@@ -128,7 +198,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTkwMDMzLCJleHAiOjE3NTQxNjI4MzN9.PaFfGzpr2z4upgVmrsFKHLSNwGEBoQxhwPI9ETZeUBM",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyNDI5NjIsImV4cCI6MTc1NDQxNTc2Mn0.gdGboTbp4FHyihxtxau-na-USHPH60MY9_wKv4KHLA8",
 								"type": "text"
 							}
 						],
@@ -148,13 +218,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyNDM0ODUsImV4cCI6MTc1NDQxNjI4NX0.gmNRCGp2jKgRYuZtvlSV4tEIgCOibBa-orDNibnLXEE",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"code\": \"demo\",\r\n  \"discountPercentage\": 1,\r\n  \"expiryDate\": \"2025-08-05T10:43:05.065Z\"\r\n}",
+							"raw": "{\r\n  \"code\": \"demo3\",\r\n  \"discountPercentage\": 12,\r\n  \"expiryDate\": \"2025-08-05T10:43:05.065Z\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -172,7 +242,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMzg0MjQsImV4cCI6MTc1NDQxMTIyNH0.3TBe4hsGfURwxglKjay9sM5kJFad8oeHWl0Q0ux3zgA",
 								"type": "text"
 							}
 						],
@@ -187,12 +257,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMzg0MjQsImV4cCI6MTc1NDQxMTIyNH0.3TBe4hsGfURwxglKjay9sM5kJFad8oeHWl0Q0ux3zgA",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f434ac9a97367c2df93c5",
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f8df351cbb2e0346e6c88",
 							"protocol": "https",
 							"host": [
 								"parcel-delivery-system-backend-sigma",
@@ -202,7 +272,7 @@
 							"path": [
 								"api",
 								"coupon",
-								"688f434ac9a97367c2df93c5"
+								"688f8df351cbb2e0346e6c88"
 							],
 							"query": [
 								{
@@ -222,7 +292,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMzg0MjQsImV4cCI6MTc1NDQxMTIyNH0.3TBe4hsGfURwxglKjay9sM5kJFad8oeHWl0Q0ux3zgA",
 								"type": "text"
 							}
 						],
@@ -235,7 +305,7 @@
 								}
 							}
 						},
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f4576c9a97367c2df93db"
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f8df351cbb2e0346e6c88"
 					},
 					"response": []
 				},
@@ -246,7 +316,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyMTg5MzIsImV4cCI6MTc1NDM5MTczMn0.6qbQwUlyunieYcDkSzT54bg6rxCPFM6wOqrjcpaeIRc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyNDM0ODUsImV4cCI6MTc1NDQxNjI4NX0.gmNRCGp2jKgRYuZtvlSV4tEIgCOibBa-orDNibnLXEE",
 								"type": "text"
 							}
 						],
@@ -259,7 +329,7 @@
 								}
 							}
 						},
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688f4576c9a97367c2df93db"
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/coupon/688fa1e63e988e01416f471a"
 					},
 					"response": []
 				}
@@ -275,20 +345,20 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmM2QzZWY3YzQ5OWI4NGMyYjRlNDgiLCJlbWFpbCI6ImVAZ21haWwuY29tIiwicm9sZSI6InNlbmRlciIsImlhdCI6MTc1NDIyMDYxOSwiZXhwIjoxNzU0MzkzNDE5fQ.esKPSXAa2RuYw7QmzExhJNPmbRedYGtav7EJFLky0K0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmYTAxMDNlOTg4ZTAxNDE2ZjQ2ZWIiLCJlbWFpbCI6InNlbmRlckBnbWFpbC5jb20iLCJyb2xlIjoic2VuZGVyIiwiaWF0IjoxNzU0MjQzMTMyLCJleHAiOjE3NTQ0MTU5MzJ9.x7vcpxqIhinNGbx_Ovo8pM6Z3whVtTHXg8Zf5tLcJ48",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"receiver\": \"688a99f56db1e0093a6e3e55\",\r\n  \"parcelType\": \"Clothing\",\r\n  \"weight\": 3,\r\n  \"deliveryMethod\": \"Agent\",\r\n  \"pickupAddress\": \"Dhaka\",\r\n  \"deliveryAddress\": \"chittagong\",\r\n  \"deliveryDistance\": 7,\r\n  \"contactPhone\": \"01812345678\",\r\n  \"estimatedDeliveryDate\": \"2025-08-05T00:00:00.000Z\",\r\n  \"paymentMethod\": \"Cash on Delivery\",\r\n  \"coupon\": \"688f434ac9a97367c2df93c5\"\r\n}\r\n",
+							"raw": "{\r\n  \"receiver\": \"688fa0293e988e01416f46ee\",\r\n  \"parcelType\": \"Clothing\",\r\n  \"weight\": 3,\r\n  \"deliveryMethod\": \"Agent\",\r\n  \"pickupAddress\": \"Dhaka\",\r\n  \"deliveryAddress\": \"chittagong\",\r\n  \"deliveryDistance\": 7,\r\n  \"contactPhone\": \"01812345678\",\r\n  \"estimatedDeliveryDate\": \"2025-08-05T00:00:00.000Z\",\r\n  \"paymentMethod\": \"Cash on Delivery\",\r\n  \"coupon\": \"688f434ac9a97367c2df93c5\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/create"
+						"url": "http://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/create"
 					},
 					"response": []
 				},
@@ -299,12 +369,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhhOTZlODEzM2NkNTJlZGQwZDkzMzYiLCJlbWFpbCI6Im5pc2hhdEBnbWFpbC5jb20iLCJyb2xlIjoic2VuZGVyIiwiaWF0IjoxNzU0MTcyNTIxLCJleHAiOjE3NTQzNDUzMjF9.LSckGgfEuCZ2oM_WAnjNOcZ2acocrRdbneSWiuCa0j8",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTYzODM0MTQsImV4cCI6MTc1NjU1NjIxNH0.lULR4bVdeazJoNykij5fr0OA1ac6CO9tdhPVY5MBCiE",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/?",
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/?sort=-createdAt",
 							"protocol": "https",
 							"host": [
 								"parcel-delivery-system-backend-sigma",
@@ -328,14 +398,8 @@
 									"disabled": true
 								},
 								{
-									"key": "deliveryMethod",
-									"value": "Agent",
-									"disabled": true
-								},
-								{
 									"key": "sort",
-									"value": "-createdAt",
-									"disabled": true
+									"value": "-createdAt"
 								},
 								{
 									"key": "limit",
@@ -343,8 +407,14 @@
 									"disabled": true
 								},
 								{
-									"key": "",
-									"value": null
+									"key": "deliveryMethod",
+									"value": "Agent",
+									"disabled": true
+								},
+								{
+									"key": "currentStatus",
+									"value": "In Transit",
+									"disabled": true
 								}
 							]
 						}
@@ -358,11 +428,11 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiY2JkMmRjMDAyYjFkN2Y2NmUxYjUiLCJlbWFpbCI6ImthaWYxQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDE2MzAwOCwiZXhwIjoxNzU0MzM1ODA4fQ.yJbOq1HOOEjhXDrXHXirw6rZ9Qe3FAvEhng0s9fsyJo",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTY1ODQ1NjMsImV4cCI6MTc1Njc1NzM2M30.FOTZb47FVYKXE4ZexKsJYuzM8jEBN1ylW32IbXHRcV0",
 								"type": "text"
 							}
 						],
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/688d24e9ebcd0165697e3266"
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/68b33bc045b47ff3f61d1438"
 					},
 					"response": []
 				},
@@ -373,7 +443,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiY2JkMmRjMDAyYjFkN2Y2NmUxYjUiLCJlbWFpbCI6ImthaWYxQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDE1MzEyNSwiZXhwIjoxNzU0MzI1OTI1fQ.hB-SZy8ffiOyyzkB5-0CWmZAQlxC_rHJKk8opldHhKM",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmYTAyOTNlOTg4ZTAxNDE2ZjQ2ZWUiLCJlbWFpbCI6InJlY2VpdmVyQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDI0MzM2MSwiZXhwIjoxNzU0NDE2MTYxfQ.OMZibwWqbn4KoavgUBUqi18OwZQ40L8kqjzC4O1DjXU",
 								"type": "text"
 							}
 						],
@@ -386,7 +456,7 @@
 								}
 							}
 						},
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/status/688d28c16cf693c73751d618"
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/status/688fa0733e988e01416f46f4"
 					},
 					"response": []
 				},
@@ -397,20 +467,20 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQxNTUwNTUsImV4cCI6MTc1NDMyNzg1NX0.7A7rX8XLbSCAzx1TbJL3a1R5RsZNVBVsevpxK0aOlS0",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTYzMzQzMjcsImV4cCI6MTc1NjUwNzEyN30.N9HZdfNwnJqjVVAmQrntn6dVhA6Tv9kvmndEmNwHCRo",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currentStatus\": \"Blocked\",\r\n    \"location\": \"Dhaka\" \r\n}",
+							"raw": "{\r\n    \"currentStatus\": \"In Transit\",\r\n    \"location\": \"Highway Road\",\r\n    \"note\": \"Ok\" \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/admin/status/688d24e9ebcd0165697e3266"
+						"url": "http://localhost:5000/api/parcel/admin/status/688fa08c3e988e01416f46fa"
 					},
 					"response": []
 				},
@@ -421,7 +491,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQxNTUwNTUsImV4cCI6MTc1NDMyNzg1NX0.7A7rX8XLbSCAzx1TbJL3a1R5RsZNVBVsevpxK0aOlS0",
+								"value": "",
 								"type": "text"
 							}
 						],
@@ -436,11 +506,11 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiY2JkMmRjMDAyYjFkN2Y2NmUxYjUiLCJlbWFpbCI6ImthaWYxQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDE2MzAwOCwiZXhwIjoxNzU0MzM1ODA4fQ.yJbOq1HOOEjhXDrXHXirw6rZ9Qe3FAvEhng0s9fsyJo",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmYTAyOTNlOTg4ZTAxNDE2ZjQ2ZWUiLCJlbWFpbCI6InJlY2VpdmVyQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NDI0MzM2MSwiZXhwIjoxNzU0NDE2MTYxfQ.OMZibwWqbn4KoavgUBUqi18OwZQ40L8kqjzC4O1DjXU",
 								"type": "text"
 							}
 						],
-						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/history/688d24e9ebcd0165697e3266"
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/parcel/history/688fa08c3e988e01416f46fa"
 					},
 					"response": []
 				}
@@ -456,7 +526,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "//admin\r\n{\r\n    \"email\": \"pds_admin@gmail.com\",\r\n    \"password\": \"123456\"\r\n}\r\n\r\n//receiver\r\n// {\r\n//     \"email\": \"a@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n// {\r\n//     \"email\": \"kaif1@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n\r\n\r\n//sender\r\n// {\r\n//     \"email\": \"nishat@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n// {\r\n//     \"email\": \"e@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }",
+							"raw": "//admin\r\n// {\r\n//     \"email\": \"pds_admin@gmail.com\",\r\n//     \"password\": \"123456\"\r\n// }\r\n// {\r\n//     \"email\": \"sender@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n{\r\n    \"email\": \"receiver@gmail.com\",\r\n    \"password\": \"Abc@123\"\r\n}\r\n\r\n\r\n//receiver\r\n// {\r\n//     \"email\": \"a@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n// {\r\n//     \"email\": \"kaif1@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n//sender\r\n// {\r\n//     \"email\": \"nishat@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }\r\n// {\r\n//     \"email\": \"e@gmail.com\",\r\n//     \"password\": \"Abc@123\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -498,7 +568,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTBiOTQyMzA0N2Y1ODc3ZTE2MmIiLCJlbWFpbCI6ImthaWZAZ21haWwuY29tIiwicm9sZSI6InJlY2VpdmVyIiwiaWF0IjoxNzUzOTkwMDMzLCJleHAiOjE3NTQxNjI4MzN9.PaFfGzpr2z4upgVmrsFKHLSNwGEBoQxhwPI9ETZeUBM",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTQyNDE2NTcsImV4cCI6MTc1NDQxNDQ1N30.mo_lc-qPHwkRlnswB1kepyW-AJSnaCCVzeek10rtWNo",
 								"type": "text"
 							}
 						],
@@ -527,6 +597,121 @@
 							}
 						},
 						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/auth/reset-password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "analytics",
+			"item": [
+				{
+					"name": "delivery status distribution",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTY0OTAyMjQsImV4cCI6MTc1NjY2MzAyNH0.N0CWgD6AOSEHoVSQd8P74xSRgZDlHlZ5ar8mYis1Gu8",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/analytics/status-distribution"
+					},
+					"response": []
+				},
+				{
+					"name": "monthly shipments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmYTAyOTNlOTg4ZTAxNDE2ZjQ2ZWUiLCJlbWFpbCI6InJlY2VpdmVyQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NjY1NDAzOSwiZXhwIjoxNzU2ODI2ODM5fQ._UG286P8UU4Zo9N-fM2Qmi49mttkQGTCf4egMMCvS9Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://parcel-delivery-system-backend-sigma.vercel.app/api/analytics/monthly-shipments",
+							"protocol": "https",
+							"host": [
+								"parcel-delivery-system-backend-sigma",
+								"vercel",
+								"app"
+							],
+							"path": [
+								"api",
+								"analytics",
+								"monthly-shipments"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "trends",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTY0OTAyMjQsImV4cCI6MTc1NjY2MzAyNH0.N0CWgD6AOSEHoVSQd8P74xSRgZDlHlZ5ar8mYis1Gu8",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/analytics/trends"
+					},
+					"response": []
+				},
+				{
+					"name": "receiver success matric",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmYTAyOTNlOTg4ZTAxNDE2ZjQ2ZWUiLCJlbWFpbCI6InJlY2VpdmVyQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NjY1NDAzOSwiZXhwIjoxNzU2ODI2ODM5fQ._UG286P8UU4Zo9N-fM2Qmi49mttkQGTCf4egMMCvS9Q",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/analytics/receiver/success-metrics"
+					},
+					"response": []
+				},
+				{
+					"name": "receiver delivery performance",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmYTAyOTNlOTg4ZTAxNDE2ZjQ2ZWUiLCJlbWFpbCI6InJlY2VpdmVyQGdtYWlsLmNvbSIsInJvbGUiOiJyZWNlaXZlciIsImlhdCI6MTc1NjY1NDAzOSwiZXhwIjoxNzU2ODI2ODM5fQ._UG286P8UU4Zo9N-fM2Qmi49mttkQGTCf4egMMCvS9Q",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/analytics/receiver/delivery-performance"
+					},
+					"response": []
+				},
+				{
+					"name": "overview",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhiOTZkNjRlMTI3Mzc5NDQ1YjhkMjAiLCJlbWFpbCI6InBkc19hZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTY1MDkwMTEsImV4cCI6MTc1NjY4MTgxMX0.J9Fcx7j4m2nVnfnoEGm9VPtfSF-T5xp2-Dc9oNnN1Qs",
+								"type": "text"
+							}
+						],
+						"url": "https://parcel-delivery-system-backend-sigma.vercel.app/api/analytics/overview"
 					},
 					"response": []
 				}

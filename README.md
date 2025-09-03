@@ -23,7 +23,7 @@ The goal is to implement a system where users can register as senders or receive
 
 * * *
 
-## 🛠️ Technology Stack (Suggested)
+## 🛠️ Technology Stack
 
 | Category | Tools |
 |---------|-------|
@@ -98,9 +98,11 @@ export default tseslint.config(
 ### APIs related to User :----------
  1. **POST** `/api/user/register` --- api for creating user
  2. **GET** `/api/user/` --- api for getting all users
- 3. **GET** `/api/user/:id` --- api for getting single user data
- 4. **PATCH** `/api/user/:id` --- api for updating user
- 5. **DELETE** `/api/user/me` --- api for deleting own account by user
+ 3. **GET** `/api/user/receivers` --- api for getting all receivers
+ 4. **GET** `/api/user/me` --- api for getting all users own info
+ 5. **GET** `/api/user/:id` --- api for getting single user data
+ 6. **PATCH** `/api/user/:id` --- api for updating user
+ 7. **DELETE** `/api/user/me` --- api for deleting own account by user
 
 
 ### APIs related to Auth :----------
@@ -129,6 +131,14 @@ export default tseslint.config(
  4. **PATCH** `/api/coupon/:id` --- api for updating coupon
  5. **DELETE** `/api/coupon/:id` --- api for deleting own account by coupon
 
+
+ ### APIs related to Analytic :----------
+ 1. **GET** `/api/analytics//status-distribution` --- api for getting delivery distribution status
+ 2. **GET** `/api/analytics/monthly-shipments` --- api for getting monthly shipment logs.
+ 3. **GET** `/api/analytics/trends` --- api for getting last 3 months shipment logs.
+ 4. **GET** `/api/analytics/overview` --- api for getting overview of (Total parcels, Delivered, In Transit, Pending/Cancelled).
+ 5. **GET** `/api/analytics/receiver/success-metrics` --- api for getting data of successfully received/canceled/returned shipment.
+ 6. **GET** `/api/analytics/receiver/delivery-performance` --- api for getting the data for 'On Time' or 'Late' delivery behavior.
 
 
 
